@@ -1,0 +1,20 @@
+{
+  "servers": {
+    "excalidraw": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--network",
+        "mcp-net",
+        "-e",
+        "EXPRESS_SERVER_URL=http://mcp-excalidraw-canvas:3000",
+        "-e",
+        "ENABLE_CANVAS_SYNC=true",
+        "ghcr.io/yctimlin/mcp_excalidraw:latest"
+      ]
+    }
+  }
+}

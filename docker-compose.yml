@@ -1,0 +1,13 @@
+services:
+  mcp-excalidraw-canvas:
+    image: ghcr.io/yctimlin/mcp_excalidraw-canvas:latest
+    container_name: mcp-excalidraw-canvas
+    ports:
+      - "3000:3000"
+    restart: on-failure
+    networks:
+      - mcp-net
+
+networks:
+  mcp-net:
+    name: mcp-net
