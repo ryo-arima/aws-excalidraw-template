@@ -1,0 +1,40 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "a3-portrait-frame",
+      "type": "frame",
+      "x": 0,
+      "y": 0,
+      "width": 1122,
+      "height": 1587,
+      "angle": 0,
+      "strokeColor": "#868e96",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 0,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 1005,
+      "version": 1,
+      "versionNonce": 1005,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1709000000000,
+      "link": null,
+      "locked": false,
+      "name": "A3 Portrait (297×420mm)"
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}

@@ -1,0 +1,40 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "a4-portrait-frame",
+      "type": "frame",
+      "x": 0,
+      "y": 0,
+      "width": 794,
+      "height": 1122,
+      "angle": 0,
+      "strokeColor": "#868e96",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 0,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 1007,
+      "version": 1,
+      "versionNonce": 1007,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1709000000000,
+      "link": null,
+      "locked": false,
+      "name": "A4 Portrait (210×297mm)"
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}
