@@ -1,0 +1,21 @@
+# GitHub Copilot instructions
+.github/instructions/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# macOS
+.DS_Store
+
+# VS Code (mcp.json は管理対象のため除外しない)
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+
+# Docker
+*.log
