@@ -1,0 +1,34 @@
+# etc/app.yaml — aet (AWS Excalidraw Template) 設定ファイル
+# すべてのパスはプロジェクトルート（go.mod があるディレクトリ）からの相対パスです。
+
+canvas:
+  # Excalidraw Canvas REST API のベース URL
+  # 環境変数 EXPRESS_SERVER_URL が設定されている場合はそちらが優先されます。
+  url: "http://localhost:3000"
+
+# ── 読み取り専用ソース ──────────────────────────────────────────────
+paths:
+  # AWS Architecture-Group-Icons（add service のアイコン探索先）
+  asset_package: "etc/resources/Asset-Package"
+  # リポジトリ管理する .excalidraw テンプレート（generate のコピー元）
+  templates: "etc/resources/templates"
+  # list services のデータソース CSV
+  service_catalog_csv: "etc/resources/service-catalog.csv"
+
+# ── 生成ファイル書き出し先（templates/ とは完全に分離）────────────────────
+output:
+  # aet generate frames の出力ディレクトリ
+  frames: "output/aws-frames"
+  # aet generate catalog の出力ファイル
+  catalog: "output/service-catalog.excalidraw"
+
+# ── add service で追加する処例の設定 ────────────────────────────────
+legend:
+  # 処例アイコン配置のデフォルト x/y 位置
+  # --legend-x / --legend-y フラグ未指定時: 追加アイコンの x+size+offset_x、y+offset_y に配置
+  offset_x: 120
+  offset_y: 0
+  # 処例エントリのアイコンサイズ（px）
+  icon_size: 32
+  # 処例ラベルのフォントサイズ（px）
+  font_size: 12
