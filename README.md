@@ -10,8 +10,9 @@ Includes the official AWS Asset Package icons, ready-to-use Excalidraw templates
 | Feature | Description |
 |---------|-------------|
 | **Script-based generation** | Any agent writes a Python script and runs it to produce a `.excalidraw` file — no Docker, no VS Code required |
+| **`aet` CLI** | Go binary: copy frame templates, list service icons, add icons to diagrams |
 | **Paper-size frames** | Excalidraw templates sized to standard paper (A1–A5, Letter, Legal, Tabloid × portrait/landscape) |
-| **AWS architecture frames** | Templates with pre-built nested group frames (Cloud → Account → Region → VPC → AZ → Subnets) |
+| **AWS architecture frames** | 180+ variants with pre-built nested group frames (Cloud → Account → Region → VPC → AZ → Subnets) |
 | **Service catalog** | `.excalidraw` file listing all AWS icons (Architecture / Resource / Group / Category) |
 | **MCP live canvas** | Optional: control a live Excalidraw canvas from GitHub Copilot via MCP tools |
 
@@ -19,6 +20,9 @@ Includes the official AWS Asset Package icons, ready-to-use Excalidraw templates
 
 ### Script-based diagram generation *(no extra setup)*
 - **Python 3.10+** — standard library only, no third-party packages needed
+
+### `aet` CLI *(optional)*
+- **Go 1.21+** — `go build -o .bin/aet ./cmd`
 
 ### MCP live canvas *(optional)*
 - Docker / Docker Compose
@@ -29,28 +33,80 @@ Includes the official AWS Asset Package icons, ready-to-use Excalidraw templates
 ```
 .
 ├── docker-compose.yml              # MCP canvas server (port 3000)
+├── doc/
+│   └── COMMAND_SPEC.md             # Full CLI command reference
 ├── Asset-Package/                  # Official AWS icon SVGs
-│   ├── Architecture-Service-Icons/ #   Service icons (64 px)
-│   ├── Resource-Icons/             #   Resource icons (48 px)
+│   ├── Architecture-Service-Icons/ #   Service icons (16/32/48/64 px per category)
+│   ├── Resource-Icons/             #   Resource icons (48 px per category)
 │   ├── Architecture-Group-Icons/   #   Group icons   (32 px)
 │   └── Category-Icons/             #   Category icons (64 px)
 ├── etc/
+│   ├── generate_aws_frames.py      # Generates templates/aws-frames/**/*.excalidraw
 │   ├── generate_catalog_scene.py   # Generates templates/service-catalog.excalidraw
-│   ├── generate_aws_frames.py      # Generates templates/aws-frames/*.excalidraw (16 files)
-│   └── service-catalog.csv         # AWS service list (reference)
-├── samples/                        # Agent-generated diagram outputs
+│   ├── excalidraw_helpers.py       # Shared Python helpers (make_rect, make_text, …)
+│   └── resources/
+│       └── service-catalog.csv    # AWS service list (name, category, SVG path, base64)
+├── pkg/                            # Go source (controller / repository / entity)
+├── cmd/                            # Go CLI entry point
+├── output/                         # Generated diagram output (git-ignored)
 ├── templates/
 │   ├── service-catalog.excalidraw  # Pre-generated service catalog
-│   ├── paper-frames/               # Paper-size frame templates
+│   ├── paper-frames/               # Paper-size frame templates (16 files)
 │   │   ├── A4-portrait.excalidraw
-│   │   ├── A4-landscape.excalidraw
 │   │   └── ...  (A1–A5, Letter, Legal, Tabloid × portrait/landscape)
 │   └── aws-frames/                 # AWS architecture frame templates
-│       ├── A4-portrait.excalidraw
-│       ├── A4-landscape.excalidraw
-│       └── ...  (same 16 paper sizes)
+│       ├── 1cloud-1account-1region-2az-3subnet/    # default variant
+│       │   ├── A4-portrait.excalidraw
+│       │   └── ...  (16 paper sizes)
+│       ├── 1cloud-1account-1region-2az-3subnet-staggered/
+│       └── ...  (180+ variants total)
 └── README.md
 ```
+
+---
+
+## `aet` CLI Quick Reference
+
+> Full specification: [doc/COMMAND_SPEC.md](doc/COMMAND_SPEC.md)
+> Agent playbook: [AGENTS.md](AGENTS.md)
+
+```bash
+# Build
+go build -o .bin/aet ./cmd
+
+# Copy frame templates (default: 3-subnet, 2 AZs)
+aet generate frames --size A4 --output output/my-diagram/
+
+# List all layout variants
+aet generate frames --list-variants
+
+# Copy service catalog
+aet generate catalog
+
+# List available service icons
+aet list services --category Compute
+aet list services --query "load balancing"
+
+# Add icons to a diagram (single)
+aet add service --name "Amazon EC2" --file output/my-diagram/A4-portrait.excalidraw
+
+# Add icons from a CSV list (batch)
+aet add service --list services.csv --file output/my-diagram/A4-portrait.excalidraw
+```
+
+### Variant naming
+
+```
+<N>cloud-<N>account-<N>region-<N>az-<N>subnet[-staggered]
+```
+
+| Suffix | Subnet layers |
+|--------|---------------|
+| `2subnet` | Public + Private |
+| `3subnet` | Public + Private 1 + Private 2 *(default)* |
+| `4subnet` | Public + Private 1 + Private 2 + Private 3 |
+
+AZ layout: `grid` (default flat layout) or `staggered` (overlapping depth effect, AZ ≥ 2).
 
 ## Script-Based Diagram Generation
 
@@ -59,14 +115,10 @@ Any agent (GitHub Copilot, Claude, Cursor, CI, etc.) can generate architecture d
 ### Workflow
 
 ```bash
-# 1. Write a generation script
-#    etc/my_diagram.py  →  outputs samples/my_diagram.excalidraw
-
+# 1. Write a generation script  →  etc/my_diagram.py
 # 2. Run it
 python3 etc/my_diagram.py
-
-# 3. Open the output in Excalidraw
-#    https://excalidraw.com  or  VS Code Excalidraw extension
+# 3. Open output in Excalidraw (https://excalidraw.com or VS Code extension)
 ```
 
 ### Script template
@@ -78,7 +130,7 @@ import json, os, base64, hashlib
 BASE_DIR    = os.path.dirname(os.path.abspath(__file__))
 GROUP_ICONS = os.path.join(BASE_DIR, "..", "Asset-Package", "Architecture-Group-Icons")
 SVC_ICONS   = os.path.join(BASE_DIR, "..", "Asset-Package", "Architecture-Service-Icons")
-OUT_DIR     = os.path.join(BASE_DIR, "..", "samples")
+OUT_DIR     = os.path.join(BASE_DIR, "..", "output")
 
 W, H = 794, 1122   # A4 portrait @ 96 dpi (see paper sizes table below)
 SEED = 1000
@@ -154,25 +206,29 @@ Each contains a single Excalidraw `frame` element at the exact paper size.
 
 ### AWS architecture frames (`templates/aws-frames/`)
 
-Same 16 paper sizes, each pre-populated with nested group frames.  
+180+ variants, each containing 16 paper sizes.  
 Colors follow the official [AWS Architecture Icons Deck for Light BG](https://aws.amazon.com/architecture/icons/).
 
 ```
-AWS Cloud         #242F3E  solid 2px
-  └─ AWS Account      #E7157B  solid 2px
-       └─ Region          #00A4A6  dashed 2px
-            └─ VPC            #8C4FFF  solid 2px
-                 └─ AZ (×2)       #00A4A6  dashed 1px
-                      ├─ Public Subnet    #7AA116  solid 1px
-                      │    └─ Security Group  #7D8998  dashed 1px
-                      └─ Private Subnet   #00A4A6  solid 1px
-                           └─ Auto Scaling Group  #ED7100  dashed 2px
+AWS Cloud           #242F3E  solid 2px
+  └─ AWS Account    #E7157B  solid 2px
+       └─ Region    #00A4A6  dashed 2px
+            └─ VPC  #8C4FFF  solid 2px
+                 └─ AZ [×N]  #00A4A6  dashed 1px
+                      ├─ Public Subnet     #7AA116  solid 1px
+                      │    └─ Security Group  #9B0000  dashed 1px
+                      ├─ Private Subnet 1  #00A4A6  solid 1px
+                      │    └─ Security Group  #9B0000  dashed 1px
+                      └─ Private Subnet 2  (3subnet / 4subnet)
+                           └─ Security Group  #9B0000  dashed 1px
 ```
 
 Regenerate:
 
 ```bash
 python3 etc/generate_aws_frames.py
+# → templates/aws-frames/<variant>/*.excalidraw
+# → 180 variants × 16 paper sizes = 2,880 files
 ```
 
 ## Service Catalog

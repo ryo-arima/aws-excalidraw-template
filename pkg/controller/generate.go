@@ -25,36 +25,87 @@ func InitGenerateCmd() *cobra.Command {
 
 // initGenerateFramesCmd creates 'generate frames'.
 //
-//	aet generate frames [--size A4] [--output dir]
+//	aet generate frames [--variant <name>] [--size A4] [--output dir] [--list-variants]
 func initGenerateFramesCmd() *cobra.Command {
 	var (
-		outputDir string
-		sizeFlag  string
+		outputDir    string
+		sizeFlag     string
+		variantFlag  string
+		listVariants bool
 	)
+
+	const defaultVariant = "1cloud-1account-1region-2az-3subnet"
 
 	cmd := &cobra.Command{
 		Use:   "frames",
 		Short: "Copy AWS frame templates to the output directory",
-		Long: `Copies .excalidraw files from etc/resources/templates/aws-frames/ to the output directory.
+		Long: `Copies .excalidraw files from templates/aws-frames/<variant>/ to the output directory.
+
+Available variants are named as:
+  <N>cloud-<N>account-<N>region-<N>az-<N>subnet[-staggered]
+  e.g. 1cloud-1account-1region-2az-3subnet  (default)
+       1cloud-1account-1region-2az-3subnet-staggered  (staggered AZ layout)
+       2cloud-3account-2region-3az-4subnet  (most complex)
+  "base" copies the original pre-generated templates.
+
+  Subnet counts: 2 (Public + Private), 3 (Public + Private 1/2), 4 (Public + Private 1/2/3)
+  AZ layout:     grid (default), staggered (overlapping AZs with depth shading, requires N>=2)
+
+Use --list-variants to see all variants available in the template directory.
 
 Examples:
   aet generate frames
+  aet generate frames --variant 1cloud-1account-1region-2az-2subnet
+  aet generate frames --variant 1cloud-1account-1region-2az-3subnet-staggered
+  aet generate frames --variant 2cloud-3account-2region-3az-4subnet
+  aet generate frames --variant base
   aet generate frames --size A4
+  aet generate frames --list-variants
   aet generate frames --output /tmp/my-frames`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cfg := config.New()
+			awsFramesDir := filepath.Join(cfg.TemplatesSourceDir(), "aws-frames")
+
+			// ── --list-variants ───────────────────────────────────────────
+			if listVariants {
+				entries, err := os.ReadDir(awsFramesDir)
+				if err != nil {
+					return fmt.Errorf("read aws-frames dir %s: %w", awsFramesDir, err)
+				}
+				fmt.Printf("Available variants in %s:\n", awsFramesDir)
+				for _, e := range entries {
+					if !e.IsDir() {
+						continue
+					}
+					marker := ""
+					if e.Name() == defaultVariant {
+						marker = "  ← default"
+					}
+					fmt.Printf("  %s%s\n", e.Name(), marker)
+				}
+				return nil
+			}
+
+			// ── resolve variant subdirectory ──────────────────────────────
+			if variantFlag == "" {
+				variantFlag = defaultVariant
+			}
+			srcDir := filepath.Join(awsFramesDir, variantFlag)
+			if _, err := os.Stat(srcDir); os.IsNotExist(err) {
+				return fmt.Errorf("variant %q not found in %s (use --list-variants to see available variants)",
+					variantFlag, awsFramesDir)
+			}
+
 			if outputDir == "" {
 				outputDir = cfg.OutputFramesDir()
 			}
-			srcDir := filepath.Join(cfg.TemplatesSourceDir(), "aws-frames")
+			if err := os.MkdirAll(outputDir, 0755); err != nil {
+				return fmt.Errorf("create output dir: %w", err)
+			}
 
 			entries, err := os.ReadDir(srcDir)
 			if err != nil {
-				return fmt.Errorf("read templates dir %s: %w", srcDir, err)
-			}
-
-			if err := os.MkdirAll(outputDir, 0755); err != nil {
-				return fmt.Errorf("create output dir: %w", err)
+				return fmt.Errorf("read variant dir %s: %w", srcDir, err)
 			}
 
 			count := 0
@@ -81,6 +132,8 @@ Examples:
 
 	cmd.Flags().StringVarP(&outputDir, "output", "o", "", "output directory (default: output/aws-frames/)")
 	cmd.Flags().StringVar(&sizeFlag, "size", "", "filter by paper size prefix, e.g. A4")
+	cmd.Flags().StringVar(&variantFlag, "variant", "", fmt.Sprintf("layout variant (default: %s)", defaultVariant))
+	cmd.Flags().BoolVar(&listVariants, "list-variants", false, "list available variants and exit")
 	return cmd
 }
 
