@@ -328,7 +328,8 @@ def darken_hex(color: str, factor: float) -> str:
 # ── Main scene builder ────────────────────────────────────────────────────────
 def build_scene(W, H, suffix, icon_files,
                 n_clouds=1, n_accounts=1, n_regions=1, n_azs=2,
-                az_layout="grid", n_subnets=3):
+                az_layout="grid", n_subnets=3, spacing_mode="both",
+                start_mode="top"):
     """Build a scene with the given structural dimensions.
 
     Layout strategy:
@@ -341,6 +342,11 @@ def build_scene(W, H, suffix, icon_files,
     n_subnets: 1層目 = Public Subnet, 2層目以降 = Private Subnet N
     az_layout: "grid"      – 通常の横並び配置
                "staggered" – 右下方向にずらして重ねる奥行き表現(2AZ/3AZのみ有効)
+    spacing_mode: "both"       – 上下左右ともアイコン1個分の余白
+                  "vertical"   – 上下のみアイコン1個分、左右は従来値
+                  "horizontal" – 左右のみアイコン1個分、上下は従来値
+    start_mode:   "top"  – Account を上から下へ配置（従来）
+                  "left" – Account を左から右へ配置
     """
     elements = []
     files = {}
@@ -358,12 +364,22 @@ def build_scene(W, H, suffix, icon_files,
     ico_reg = 32
     ico_az  = 32
     ico_sub = 32
+    layer_gap = ico_reg  # Account/Region/VPC/AZ 間の余白（アイコン1個分）
+
+    if spacing_mode not in ("both", "vertical", "horizontal"):
+        raise ValueError(f"Unknown spacing_mode: {spacing_mode}")
+    if start_mode not in ("top", "left"):
+        raise ValueError(f"Unknown start_mode: {start_mode}")
 
     m  = max(14, round(base * 0.022))
     p1 = max(10, round(base * 0.016))
     p2 = max(8,  round(base * 0.013))
     p3 = max(7,  round(base * 0.011))
     p4 = max(5,  round(base * 0.008))
+
+    # 子要素を「余裕を持って」収めるための最小サイズ
+    min_child_w = ico_reg + p2 * 4
+    min_child_h = ico_reg + p2 * 4
 
     header_h = logo_sz + p3
 
@@ -400,13 +416,21 @@ def build_scene(W, H, suffix, icon_files,
         acc_area_h = cloud_h - header_h - p1 * 2
 
         acc_gap = p1 if n_accounts > 1 else 0
-        acc_h   = (acc_area_h - acc_gap * (n_accounts - 1)) / n_accounts
-        acc_w   = acc_area_w
+        if start_mode == "left":
+            acc_w = (acc_area_w - acc_gap * (n_accounts - 1)) / n_accounts
+            acc_h = acc_area_h
+        else:
+            acc_h = (acc_area_h - acc_gap * (n_accounts - 1)) / n_accounts
+            acc_w = acc_area_w
 
         for ai in range(n_accounts):
             aidx  = ai + 1
-            acc_x = acc_area_x
-            acc_y = acc_area_y + ai * (acc_h + acc_gap)
+            if start_mode == "left":
+                acc_x = acc_area_x + ai * (acc_w + acc_gap)
+                acc_y = acc_area_y
+            else:
+                acc_x = acc_area_x
+                acc_y = acc_area_y + ai * (acc_h + acc_gap)
 
             st = STYLE["account"]
             elements.append(make_rect(
@@ -420,19 +444,32 @@ def build_scene(W, H, suffix, icon_files,
                            acc_x, acc_y, logo_sz, fs_aws, p1, s)
 
             # ── Regions (side-by-side horizontally inside account) ────
-            reg_area_x = acc_x + p1
-            reg_area_y = acc_y + header_h + p1
-            reg_area_w = acc_w - p1 * 2
-            reg_area_h = acc_h - header_h - p1 * 2
+            reg_gap_x = layer_gap if spacing_mode in ("both", "horizontal") else p1
+            reg_gap_y = layer_gap if spacing_mode in ("both", "vertical") else p1
+            reg_area_x = acc_x + reg_gap_x
+            reg_area_y = acc_y + header_h + reg_gap_y
+            reg_area_w = acc_w - reg_gap_x * 2
+            reg_area_h = acc_h - header_h - reg_gap_y * 2
+
+            if reg_area_w < min_child_w or reg_area_h < min_child_h:
+                continue
 
             reg_gap = p2 if n_regions > 1 else 0
-            reg_w   = (reg_area_w - reg_gap * (n_regions - 1)) / n_regions
-            reg_h   = reg_area_h
+            if start_mode == "left":
+                reg_w = reg_area_w
+                reg_h = (reg_area_h - reg_gap * (n_regions - 1)) / n_regions
+            else:
+                reg_w = (reg_area_w - reg_gap * (n_regions - 1)) / n_regions
+                reg_h = reg_area_h
 
             for ri in range(n_regions):
                 ridx  = ri + 1
-                reg_x = reg_area_x + ri * (reg_w + reg_gap)
-                reg_y = reg_area_y
+                if start_mode == "left":
+                    reg_x = reg_area_x
+                    reg_y = reg_area_y + ri * (reg_h + reg_gap)
+                else:
+                    reg_x = reg_area_x + ri * (reg_w + reg_gap)
+                    reg_y = reg_area_y
 
                 st = STYLE["region"]
                 elements.append(make_rect(
@@ -447,10 +484,15 @@ def build_scene(W, H, suffix, icon_files,
                                reg_x, reg_y, ico_reg, fs_reg, p2, s)
 
                 # ── VPC inside region ─────────────────────────────────
-                vpc_x = reg_x + p2
-                vpc_y = reg_y + header_h + p2
-                vpc_w = reg_w - p2 * 2
-                vpc_h = reg_h - header_h - p2 * 2
+                vpc_gap_x = layer_gap if spacing_mode in ("both", "horizontal") else p2
+                vpc_gap_y = layer_gap if spacing_mode in ("both", "vertical") else p2
+                vpc_x = reg_x + vpc_gap_x
+                vpc_y = reg_y + header_h + vpc_gap_y
+                vpc_w = reg_w - vpc_gap_x * 2
+                vpc_h = reg_h - header_h - vpc_gap_y * 2
+
+                if vpc_w < min_child_w or vpc_h < min_child_h:
+                    continue
 
                 st = STYLE["vpc"]
                 elements.append(make_rect(
@@ -465,10 +507,15 @@ def build_scene(W, H, suffix, icon_files,
                                vpc_x, vpc_y, ico_reg, fs_vpc, p2, s)
 
                 # ── AZs ──────────────────────────────────────────────
-                az_area_x = vpc_x + p3
-                az_area_y = vpc_y + header_h + p3
-                az_area_w = vpc_w - p3 * 2
-                az_area_h = vpc_h - header_h - p3 * 2
+                az_gap_x = layer_gap if spacing_mode in ("both", "horizontal") else p3
+                az_gap_y = layer_gap if spacing_mode in ("both", "vertical") else p3
+                az_area_x = vpc_x + az_gap_x
+                az_area_y = vpc_y + header_h + az_gap_y
+                az_area_w = vpc_w - az_gap_x * 2
+                az_area_h = vpc_h - header_h - az_gap_y * 2
+
+                if az_area_w < min_child_w or az_area_h < min_child_h:
+                    continue
 
                 use_stagger = (az_layout == "staggered" and n_azs >= 2)
                 if use_stagger:
@@ -481,9 +528,16 @@ def build_scene(W, H, suffix, icon_files,
                 else:
                     stagger   = 0
                     az_gap    = max(6, round(base * 0.009)) if n_azs > 1 else 0
-                    az_w      = (az_area_w - az_gap * (n_azs - 1)) / n_azs
-                    az_h      = az_area_h
+                    if start_mode == "left":
+                        az_w = az_area_w
+                        az_h = (az_area_h - az_gap * (n_azs - 1)) / n_azs
+                    else:
+                        az_w = (az_area_w - az_gap * (n_azs - 1)) / n_azs
+                        az_h = az_area_h
                     az_render = list(range(n_azs))
+
+                if az_w < min_child_w or az_h < min_child_h:
+                    continue
 
                 for zi in az_render:
                     zidx = zi + 1
@@ -495,8 +549,12 @@ def build_scene(W, H, suffix, icon_files,
                         dark_factor = (zi / (n_azs - 1)) * _MAX_AZ_DARK
                         depth       = zi
                     else:
-                        az_x        = az_area_x + zi * (az_w + az_gap)
-                        az_y        = az_area_y
+                        if start_mode == "left":
+                            az_x = az_area_x
+                            az_y = az_area_y + zi * (az_h + az_gap)
+                        else:
+                            az_x = az_area_x + zi * (az_w + az_gap)
+                            az_y = az_area_y
                         dark_factor = 0.0
                         depth       = 0
 
@@ -539,37 +597,58 @@ def build_scene(W, H, suffix, icon_files,
 
                     az_header = p3 + fs_az + p3
 
-                    # subnets inside AZ (n_subnets layers: 1st=Public, 2nd+=Private)
-                    # sub_gap はアイコン1個を配置できる幅を確保
-                    sub_gap   = max(ico_sub + p4 * 2, round(base * 0.01))
-                    sub_x     = az_x + p3
-                    sub_w_val = az_w - p3 * 2
-                    sub_h_val = (az_h - az_header - p3 - sub_gap * (n_subnets - 1)) / n_subnets
-                    sub_top_y = az_y + az_header
+                    # subnets inside AZ
+                    # top始点: 縦積み（従来） / left始点: 左から横並び（Public→Private）
+                    sub_gap = max(ico_sub + p4 * 2, round(base * 0.01))
+                    if start_mode == "left":
+                        sub_left_x = az_x + p3
+                        sub_top_y  = az_y + az_header
+                        sub_h_val  = az_h - az_header - p3
+                        sub_w_val  = (az_w - p3 * 2 - sub_gap * (n_subnets - 1)) / n_subnets
+                    else:
+                        sub_x     = az_x + p3
+                        sub_w_val = az_w - p3 * 2
+                        sub_h_val = (az_h - az_header - p3 - sub_gap * (n_subnets - 1)) / n_subnets
+                        sub_top_y = az_y + az_header
+
+                    if start_mode == "left":
+                        if sub_w_val < (ico_sub + p4 * 2) or sub_h_val < (ico_sub + p4 * 2):
+                            continue
+                    else:
+                        if sub_w_val < (ico_sub + p4 * 2) or sub_h_val < (ico_sub + p4 * 2):
+                            continue
 
                     st_pub  = STYLE["pub_sub"]
                     st_priv = STYLE["priv_sub"]
                     st_sg   = STYLE["sg"]
-                    sg_x    = sub_x + p4
-                    sg_w    = sub_w_val - p4 * 2
-
-                    def _add_sg(eid, inner_y, h_parent, base_y):
+                    def _add_sg_vertical(eid, sub_x, sub_y, inner_y, h_parent, base_y):
+                        sg_x = sub_x + p4
+                        sg_w = sub_w_val - p4 * 2
                         sg_h = h_parent - (inner_y - base_y) - p4
                         elements.append(make_rect(
                             eid, sg_x, inner_y, sg_w, sg_h,
                             sg_stroke, st_sg["stroke_style"], st_sg["fill"],
-                            stroke_width=st_sg["stroke_width"], seed=s)); return s + 1
+                            stroke_width=st_sg["stroke_width"], seed=s))
+                        return s + 1, sg_x, sg_w
 
-                    def _add_sg_label(eid, inner_y):
-                        elements.append(make_text(
-                            f"{eid}-label",
-                            sg_x + p4, inner_y + p4,
-                            round(sg_w * 0.9), fs_sg + 4,
-                            "Security Group", fs_sg,
-                            sg_label, bold=True, seed=s)); return s + 1
+                    def _add_sg_horizontal(eid, sub_x, sub_y):
+                        sg_x = sub_x + p4
+                        sg_y = sub_y + ico_sub + p4
+                        sg_w = sub_w_val - p4 * 2
+                        sg_h = sub_h_val - (ico_sub + p4) - p4
+                        elements.append(make_rect(
+                            eid, sg_x, sg_y, sg_w, sg_h,
+                            sg_stroke, st_sg["stroke_style"], st_sg["fill"],
+                            stroke_width=st_sg["stroke_width"], seed=s))
+                        return s + 1, sg_x, sg_y, sg_w
 
                     for si in range(n_subnets):
-                        sub_y = sub_top_y + si * (sub_h_val + sub_gap)
+                        if start_mode == "left":
+                            sub_x = sub_left_x + si * (sub_w_val + sub_gap)
+                            sub_y = sub_top_y
+                        else:
+                            sub_x = az_x + p3
+                            sub_y = sub_top_y + si * (sub_h_val + sub_gap)
 
                         if si == 0:
                             subnet_label = "Public Subnet"
@@ -596,20 +675,37 @@ def build_scene(W, H, suffix, icon_files,
                                        subnet_label, subnet_label_color,
                                        sub_x, sub_y, ico_sub, fs_sub, p4, s)
 
-                        sub_inner_y = sub_y + ico_sub + p4
                         sg_eid = f"sg-{subnet_prefix}-{zidx}-c{cidx}a{aidx}r{ridx}-{suffix}"
-                        s = _add_sg(sg_eid, sub_inner_y, sub_h_val, sub_y)
-                        s = _add_sg_label(sg_eid, sub_inner_y)
+                        if start_mode == "left":
+                            s, sg_x, sg_y, sg_w = _add_sg_horizontal(sg_eid, sub_x, sub_y)
+                            elements.append(make_text(
+                                f"{sg_eid}-label",
+                                sg_x + p4, sg_y + p4,
+                                round(sg_w * 0.9), fs_sg + 4,
+                                "Security Group", fs_sg,
+                                sg_label, bold=True, seed=s)); s += 1
+                        else:
+                            sub_inner_y = sub_y + ico_sub + p4
+                            s, sg_x, sg_w = _add_sg_vertical(sg_eid, sub_x, sub_y, sub_inner_y, sub_h_val, sub_y)
+                            elements.append(make_text(
+                                f"{sg_eid}-label",
+                                sg_x + p4, sub_inner_y + p4,
+                                round(sg_w * 0.9), fs_sg + 4,
+                                "Security Group", fs_sg,
+                                sg_label, bold=True, seed=s)); s += 1
 
     return elements, files
 
 
 def build_excalidraw(W, H, suffix, icon_files,
                      n_clouds=1, n_accounts=1, n_regions=1, n_azs=2,
-                     az_layout="grid", n_subnets=3):
+                     az_layout="grid", n_subnets=3, spacing_mode="both",
+                     start_mode="top"):
     elements, files = build_scene(W, H, suffix, icon_files,
                                   n_clouds, n_accounts, n_regions, n_azs,
-                                  az_layout=az_layout, n_subnets=n_subnets)
+                                  az_layout=az_layout, n_subnets=n_subnets,
+                                  spacing_mode=spacing_mode,
+                                  start_mode=start_mode)
     return {
         "type": "excalidraw",
         "version": 2,
@@ -621,23 +717,33 @@ def build_excalidraw(W, H, suffix, icon_files,
 
 
 # ── Variant definitions ───────────────────────────────────────────────────────
-# All (n_clouds, n_accounts, n_regions, n_azs, az_layout, n_subnets) combinations
+# All (n_clouds, n_accounts, n_regions, n_azs, az_layout, n_subnets, spacing_mode, start_mode) combinations
 # staggered バリアントは 2AZ / 3AZ のみ生成
 def all_variants():
+    spacing_modes = ("vertical", "horizontal")
+    start_modes = ("top", "left")
     for nc in (1, 2):
         for na in (1, 2, 3):
             for nr in (1, 2):
                 for nz in (1, 2, 3):
                     for ns in (2, 3, 4):
-                        yield nc, na, nr, nz, "grid", ns
-                        if nz >= 2:
-                            yield nc, na, nr, nz, "staggered", ns
+                        for sm in spacing_modes:
+                            for st in start_modes:
+                                yield nc, na, nr, nz, "grid", ns, sm, st
+                                if nz >= 2:
+                                    yield nc, na, nr, nz, "staggered", ns, sm, st
 
 
-def variant_dir_name(nc, na, nr, nz, az_layout="grid", ns=3):
+def variant_dir_name(nc, na, nr, nz, az_layout="grid", ns=3, spacing_mode="both", start_mode="top"):
     name = f"{nc}cloud-{na}account-{nr}region-{nz}az-{ns}subnet"
     if az_layout == "staggered":
         name += "-staggered"
+    if spacing_mode == "vertical":
+        name += "-vspace"
+    elif spacing_mode == "horizontal":
+        name += "-hspace"
+    if start_mode == "left":
+        name += "-leftstart"
     return name
 
 
@@ -674,12 +780,19 @@ def main():
     variants = list(all_variants())
     grid_count     = sum(1 for v in variants if v[4] == "grid")
     stagger_count  = sum(1 for v in variants if v[4] == "staggered")
+    vspace_count   = sum(1 for v in variants if v[6] == "vertical")
+    hspace_count   = sum(1 for v in variants if v[6] == "horizontal")
+    top_count      = sum(1 for v in variants if v[7] == "top")
+    left_count     = sum(1 for v in variants if v[7] == "left")
     per_variant    = len(PAPER_SIZES) * 2
-    print(f"Generating {len(variants)} variants ({grid_count} grid + {stagger_count} staggered) "
+    print(f"Generating {len(variants)} variants "
+          f"({grid_count} grid + {stagger_count} staggered, "
+          f"{vspace_count} vspace + {hspace_count} hspace, "
+          f"{top_count} top + {left_count} left-start) "
           f"× {per_variant} paper sizes = {len(variants) * per_variant} files …\n")
 
-    for nc, na, nr, nz, az_layout, ns in variants:
-        vname   = variant_dir_name(nc, na, nr, nz, az_layout, ns)
+    for nc, na, nr, nz, az_layout, ns, spacing_mode, start_mode in variants:
+        vname   = variant_dir_name(nc, na, nr, nz, az_layout, ns, spacing_mode, start_mode)
         vdir    = os.path.join(aws_frames_dir, vname)
         os.makedirs(vdir, exist_ok=True)
 
@@ -689,14 +802,18 @@ def main():
                 scene  = build_excalidraw(W, H, suffix, icon_files,
                                           n_clouds=nc, n_accounts=na,
                                           n_regions=nr, n_azs=nz,
-                                          az_layout=az_layout, n_subnets=ns)
+                                          az_layout=az_layout, n_subnets=ns,
+                                          spacing_mode=spacing_mode,
+                                          start_mode=start_mode)
                 out = os.path.join(vdir, f"{suffix}.excalidraw")
                 with open(out, "w", encoding="utf-8") as f:
                     json.dump(scene, f, ensure_ascii=False, indent=2)
                 total_files += 1
 
         layout_tag = " [staggered]" if az_layout == "staggered" else ""
-        print(f"  {vname}/{layout_tag}  ({per_variant} files, "
+        spacing_tag = f" [{spacing_mode}]"
+        start_tag = f" [{start_mode}]"
+        print(f"  {vname}/{layout_tag}{spacing_tag}{start_tag}  ({per_variant} files, "
               f"e.g. {len(scene['elements'])} elements in A4-portrait)")
 
     print(f"\nDone: {total_files} files → {aws_frames_dir}")
