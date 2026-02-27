@@ -53,13 +53,14 @@ func MakeText(eid string, x, y, w, h float64,
 }
 
 // MakeImage creates an image (SVG icon) element referencing a file by ID.
-func MakeImage(eid string, x, y, w, h float64, fileID string, seed int) map[string]interface{} {
+// strokeColor sets the border color of the image frame; pass "transparent" for no border.
+func MakeImage(eid string, x, y, w, h float64, fileID, strokeColor string, seed int) map[string]interface{} {
 	el := base(eid, x, y, w, h, seed)
 	el["type"] = "image"
-	el["strokeColor"] = "transparent"
+	el["strokeColor"] = strokeColor
 	el["backgroundColor"] = "transparent"
 	el["fillStyle"] = "solid"
-	el["strokeWidth"] = 1
+	el["strokeWidth"] = 2
 	el["strokeStyle"] = "solid"
 	el["roughness"] = 0
 	el["status"] = "saved"

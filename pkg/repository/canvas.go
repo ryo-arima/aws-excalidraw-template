@@ -48,6 +48,14 @@ func (c *CanvasClient) Health() error {
 	return nil
 }
 
+// elementsResponse wraps the canvas API response for GET /api/elements.
+// The server returns {"success": bool, "elements": [...], "count": int}.
+type elementsResponse struct {
+	Success  bool                     `json:"success"`
+	Elements []map[string]interface{} `json:"elements"`
+	Count    int                      `json:"count"`
+}
+
 // GetElements fetches all elements currently on the canvas.
 func (c *CanvasClient) GetElements() ([]map[string]interface{}, error) {
 	resp, err := c.httpClient.Get(c.BaseURL + "/api/elements")
@@ -62,11 +70,11 @@ func (c *CanvasClient) GetElements() ([]map[string]interface{}, error) {
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("get elements: status %d: %s", resp.StatusCode, body)
 	}
-	var elements []map[string]interface{}
-	if err := json.Unmarshal(body, &elements); err != nil {
+	var wrapper elementsResponse
+	if err := json.Unmarshal(body, &wrapper); err != nil {
 		return nil, fmt.Errorf("parse elements: %w", err)
 	}
-	return elements, nil
+	return wrapper.Elements, nil
 }
 
 // BatchCreate appends new elements to the canvas without clearing existing ones.

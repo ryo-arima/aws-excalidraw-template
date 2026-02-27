@@ -17,14 +17,20 @@ Colors follow the official AWS Architecture Icons Deck for Light BG
 
 Layout rule: icon + label are placed INSIDE the top-left of each frame.
 """
+import csv as _csv
 import json
 import os
 import base64
 import hashlib
+from pathlib import Path
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ICON_DIR = os.path.join(BASE_DIR, "..", "Asset-Package", "Architecture-Group-Icons")
+ICON_DIR = os.path.join(BASE_DIR, "resources", "Asset-Package", "Architecture-Group-Icons")
 OUT_DIR  = os.path.join(BASE_DIR, "..", "templates", "aws-frames")
+
+# ── service-catalog.csv 生成用定数 ────────────────────────────────────────────
+CSV_OUT   = os.path.join(BASE_DIR, "resources", "service-catalog.csv")
+ASSET_DIR = os.path.join(BASE_DIR, "resources", "Asset-Package")
 
 # Paper sizes: portrait (w, h) @ 96 dpi
 PAPER_SIZES = {
@@ -57,6 +63,96 @@ STYLE = {
 }
 
 SEED_BASE = 4000
+
+
+# ── service-catalog.csv 生成 ──────────────────────────────────────────────────
+
+def _normalize_service_name(filename: str) -> str:
+    """SVG ファイル名から表示用サービス名を生成する。"""
+    name = filename
+    for prefix in ("Arch_", "Res_", "Arch-Category_"):
+        if name.startswith(prefix):
+            name = name[len(prefix):]
+            break
+    for suffix in ("_64.svg", "_48.svg", "_32.svg", "_16.svg"):
+        if name.endswith(suffix):
+            name = name[: -len(suffix)]
+            break
+    else:
+        name = name.removesuffix(".svg")
+    return name.replace("-", " ").replace("_", " ")
+
+
+def generate_service_catalog_csv() -> None:
+    """Asset-Package 以下の全 SVG をスキャンして service-catalog.csv を生成する。
+
+    出力列: id, category, service, svg_file, rel_path, base64
+    """
+    asset_root     = Path(ASSET_DIR).resolve()
+    workspace_root = asset_root.parent  # Asset-Package の親 = ワークスペースルート
+    rows: list[dict] = []
+
+    def _add(category: str, svg: Path) -> None:
+        rel = svg.relative_to(workspace_root).as_posix()
+        rows.append(dict(
+            category=category,
+            service=_normalize_service_name(svg.name),
+            svg_file=svg.name,
+            rel_path=rel,
+            abs_path=svg,
+        ))
+
+    # 1. Architecture-Service-Icons/*/64/*.svg
+    arch_svc = asset_root / "Architecture-Service-Icons"
+    if arch_svc.is_dir():
+        for cat_dir in sorted(arch_svc.iterdir()):
+            if not cat_dir.is_dir():
+                continue
+            size64 = cat_dir / "64"
+            if not size64.is_dir():
+                continue
+            cat_name = cat_dir.name.replace("Arch_", "").replace("-", " ")
+            for svg in sorted(size64.glob("*.svg")):
+                _add(cat_name, svg)
+
+    # 2. Resource-Icons/*  (*_48.svg 直下 or 48/ サブディレクトリ)
+    res_dir = asset_root / "Resource-Icons"
+    if res_dir.is_dir():
+        for cat_dir in sorted(res_dir.iterdir()):
+            if not cat_dir.is_dir():
+                continue
+            cat_name = "Resource " + cat_dir.name.replace("Res_", "").replace("-", " ")
+            svgs = sorted(cat_dir.glob("*_48.svg"))
+            if not svgs:
+                sub48 = cat_dir / "48"
+                if sub48.is_dir():
+                    svgs = sorted(sub48.glob("*.svg"))
+            for svg in svgs:
+                _add(cat_name, svg)
+
+    # 3. Architecture-Group-Icons/*.svg
+    grp_dir = asset_root / "Architecture-Group-Icons"
+    if grp_dir.is_dir():
+        for svg in sorted(grp_dir.glob("*.svg")):
+            _add("Architecture Groups", svg)
+
+    # 4. Category-Icons/Arch-Category_64/*.svg
+    cat_icon_dir = asset_root / "Category-Icons" / "Arch-Category_64"
+    if cat_icon_dir.is_dir():
+        for svg in sorted(cat_icon_dir.glob("*.svg")):
+            _add("AWS Categories", svg)
+
+    os.makedirs(os.path.dirname(CSV_OUT), exist_ok=True)
+    with open(CSV_OUT, "w", newline="", encoding="utf-8") as f:
+        writer = _csv.writer(f)
+        writer.writerow(["id", "category", "service", "svg_file", "rel_path", "base64"])
+        for i, row in enumerate(rows, start=1):
+            with open(row["abs_path"], "rb") as svgf:
+                b64 = "data:image/svg+xml;base64," + base64.b64encode(svgf.read()).decode("ascii")
+            writer.writerow([i, row["category"], row["service"],
+                             row["svg_file"], row["rel_path"], b64])
+
+    print(f"service-catalog.csv 生成完了: {len(rows)} エントリ -> {CSV_OUT}")
 
 
 def svg_to_data_url(path: str) -> str:
@@ -390,6 +486,11 @@ def build_excalidraw(W, H, suffix, icon_files):
 
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
+
+    # service-catalog.csv を再生成
+    print("=== service-catalog.csv を生成中 ===")
+    generate_service_catalog_csv()
+    print()
 
     # Load SVG icons
     icon_files = {}

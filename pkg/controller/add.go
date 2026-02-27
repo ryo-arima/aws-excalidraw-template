@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"fmt"
 	"math"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -17,11 +18,8 @@ import (
 func InitAddCmd() *cobra.Command {
 	addCmd := &cobra.Command{
 		Use:   "add",
-		Short: "Add an AWS service icon to the live Excalidraw canvas",
-		Long: `Add an AWS service icon, label, and legend entry to the mcp-excalidraw-canvas server.
-
-The canvas server URL is read from EXPRESS_SERVER_URL (default http://localhost:3000)
-or can be overridden with --server.`,
+		Short: "Add an AWS service icon to an Excalidraw file",
+		Long:  `Add an AWS service icon, label, and legend entry directly to a .excalidraw file.`,
 	}
 	addCmd.AddCommand(initAddServiceCmd())
 	return addCmd
@@ -32,144 +30,283 @@ or can be overridden with --server.`,
 
 func initAddServiceCmd() *cobra.Command {
 	var (
-		serverURL string
-		category  string
-		name      string
-		x, y      float64
-		size      int
-		legendX   float64
-		legendY   float64
-		noLegend  bool
-		noMerge   bool
+		targetFile string
+		listFile   string
+		category   string
+		name       string
+		size       int
+		noLegend   bool
 	)
 
 	cmd := &cobra.Command{
 		Use:   "service",
-		Short: "Add an AWS service icon+label and its legend entry to the live canvas",
-		Long: `Searches Architecture-Service-Icons for the given service name, places the icon
-and a label at (x, y), then adds a legend entry outside the frame.
+		Short: "Add AWS service icon(s) to a .excalidraw file",
+		Long: `Searches Architecture-Service-Icons for the given service name(s) and appends
+icon + label outside-bottom of the frame, with a legend entry outside the frame.
 
-The legend entry consists of a small icon and the service name, placed at
-(legend-x, legend-y). If not specified, the legend is placed at
-x + icon-size + legend.offset_x (from app.yaml).
+Legend placement:
+  --list mode  : legend stacked on the RIGHT side of the frame
+  --name mode  : legend stacked on the LEFT side of the frame
+
+Icon placement: always outside-bottom of the frame, laid out left-to-right.
+
+SVG data is read from service-catalog.csv (base64). The target .excalidraw file
+is read, updated in-place, and written back.
 
 Examples:
-  aet add service --name EC2 --x 100 --y 100
-  aet add service --name Lambda --x 200 --y 100 --size 64
-  aet add service --name RDS --category Arch_Database --x 300 --y 100 --legend-x 800 --legend-y 100`,
+  aet add service --name "Amazon EC2" --file output/my.excalidraw
+  aet add service --list services.txt --file output/my.excalidraw`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cfg := config.New()
-			if serverURL == "" {
-				serverURL = cfg.CanvasURL
+			if targetFile == "" {
+				targetFile = filepath.Join(cfg.OutputFramesDir(), "A4-landscape.excalidraw")
 			}
 
-			// ── find service icon ───────────────────────────────────────────
-			svgPath, displayName, err := findServiceIcon(cfg.AssetDir(), category, name, size)
-			if err != nil {
-				return err
-			}
-
-			dataURL, err := repository.SvgToDataURL(svgPath)
-			if err != nil {
-				return fmt.Errorf("load icon %s: %w", svgPath, err)
-			}
-
-			fid := repository.FileID(svgPath)
-			files := map[string]map[string]interface{}{}
-			files[fid] = map[string]interface{}{
-				"mimeType":      "image/svg+xml",
-				"id":            fid,
-				"dataURL":       dataURL,
-				"created":       int64(1709000000000),
-				"lastRetrieved": int64(1709000000000),
-			}
-
-			elements := []map[string]interface{}{}
-			eid := "svc-" + randomHex(6)
-			sz := float64(size)
-
-			// ── main icon ──────────────────────────────────────────────────
-			elements = append(elements,
-				repository.MakeImage(eid, x, y, sz, sz, fid, 6001))
-
-			// ── main label (below icon) ────────────────────────────────────
-			lblW := math.Max(sz*3, 120)
-			lblX := x + sz/2 - lblW/2
-			lblY := y + sz + 4
-			elements = append(elements,
-				repository.MakeText(eid+"-label", lblX, lblY, lblW, 16,
-					displayName, 12, "#1e1e1e", 6002))
-
-			// ── legend entry (outside frame) ───────────────────────────────
-			if !noLegend {
-				lgSz := float64(cfg.Legend.IconSize)
-				lgFs := cfg.Legend.FontSize
-
-				// default legend position
-				if !cmd.Flags().Changed("legend-x") {
-					legendX = x + sz + cfg.Legend.OffsetX
+			// ── build service entry list ──────────────────────────────────
+			var entries []entity.ServiceEntry
+			isBatch := false
+			if listFile != "" {
+				isBatch = true
+				var err error
+				entries, err = repository.ReadServiceList(listFile)
+				if err != nil {
+					return fmt.Errorf("read list file %s: %w", listFile, err)
 				}
-				if !cmd.Flags().Changed("legend-y") {
-					legendY = y + cfg.Legend.OffsetY
+			} else if name != "" {
+				entries = []entity.ServiceEntry{{OfficialName: name}}
+			} else {
+				return fmt.Errorf("either --name or --list is required")
+			}
+
+			// ── read existing scene ────────────────────────────────────────
+			scene, err := repository.ReadScene(targetFile)
+			if err != nil {
+				return fmt.Errorf("read scene %s: %w", targetFile, err)
+			}
+			if scene.Files == nil {
+				scene.Files = map[string]map[string]interface{}{}
+			}
+
+			lgSz := float64(cfg.Legend.IconSize) // default 32
+			sz := math.Min(float64(size), lgSz)  // align to smaller of the two
+			iconGap := 20.0
+			lgFs := cfg.Legend.FontSize
+			lgLabelW := math.Max(200.0, lgSz*2)
+
+			for i, entry := range entries {
+				if entry.OfficialName == "" {
+					continue
 				}
 
-				// legend icon (same SVG, smaller)
-				lgFid := repository.FileID(svgPath + "-legend")
-				files[lgFid] = map[string]interface{}{
+// ── find icon & load data URL ──────────────────────────────
+			var svgPath, displayName, dataURL string
+			if entry.CatalogID > 0 {
+				// ID-based direct lookup in service-catalog.csv (AND match with name when provided)
+				var idErr error
+				svgPath, dataURL, idErr = repository.LoadFromCSVByID(cfg.ServiceCatalogCSVPath(), entry.CatalogID, entry.OfficialName)
+				if idErr != nil {
+					fmt.Fprintf(os.Stderr, "warn: %v (skipping)\n", idErr)
+					continue
+				}
+				displayName = entry.OfficialName
+			} else {
+				// Filesystem search fallback (no id specified)
+				var fsErr error
+				svgPath, displayName, fsErr = findServiceIcon(cfg.AssetDir(), category, entry.OfficialName, size)
+				if fsErr != nil {
+					fmt.Fprintf(os.Stderr, "warn: %v (skipping)\n", fsErr)
+					continue
+				}
+				svgFilename := filepath.Base(svgPath)
+				var csvErr error
+				dataURL, csvErr = repository.LoadFromCSV(cfg.ServiceCatalogCSVPath(), svgFilename)
+				if csvErr != nil {
+					var svgErr error
+					dataURL, svgErr = repository.SvgToDataURL(svgPath)
+					if svgErr != nil {
+						fmt.Fprintf(os.Stderr, "warn: load icon %s: %v (skipping)\n", svgPath, svgErr)
+						continue
+					}
+					}
+				}
+				iconColor := repository.SVGBGColor(dataURL)
+
+				fid := repository.FileID(svgPath)
+				scene.Files[fid] = map[string]interface{}{
 					"mimeType":      "image/svg+xml",
-					"id":            lgFid,
+					"id":            fid,
 					"dataURL":       dataURL,
 					"created":       int64(1709000000000),
 					"lastRetrieved": int64(1709000000000),
 				}
-				elements = append(elements,
-					repository.MakeImage(eid+"-lg-icon", legendX, legendY, lgSz, lgSz, lgFid, 6003))
 
-				// legend label (to the right of the small icon)
-				lgLblX := legendX + lgSz + 6
-				lgLblY := legendY + (lgSz-float64(lgFs))/2
-				lgLblW := math.Max(lgSz*5, 160)
-				elements = append(elements,
-					repository.MakeText(eid+"-lg-label", lgLblX, lgLblY, lgLblW, float64(lgFs+4),
-						displayName, lgFs, "#1e1e1e", 6004))
+				eid := fmt.Sprintf("svc-%s-%d", randomHex(4), i)
+
+				// ── auto-position: icon outside-bottom of frame ────────────
+				fb := frameBounds(scene)
+				iconX, iconY := nextIconPos(scene, fb, sz, iconGap)
+
+				// ── main icon ──────────────────────────────────────────────
+				scene.Elements = append(scene.Elements,
+					repository.MakeImage(eid, iconX, iconY, sz, sz, fid, iconColor, 6001+i))
+
+				// ── main label below icon (centered, abbreviated) ────────────────
+				lblY := iconY + sz + 4
+				lbl := repository.MakeText(eid+"-lbl", iconX, lblY, sz, 32,
+					entry.ShortLabel(), 11, "#000000", 6101+i)
+				lbl["textAlign"] = "center"
+				scene.Elements = append(scene.Elements, lbl)
+
+				// ── legend entry ───────────────────────────────────────────
+				if !noLegend {
+					lgFid := repository.FileID(svgPath + "-lg")
+					scene.Files[lgFid] = map[string]interface{}{
+						"mimeType":      "image/svg+xml",
+						"id":            lgFid,
+						"dataURL":       dataURL,
+						"created":       int64(1709000000000),
+						"lastRetrieved": int64(1709000000000),
+					}
+
+					var lgX, lgY float64
+					if isBatch {
+						lgX, lgY = nextLegendPosRight(scene, fb, lgSz, 4)
+					} else {
+						lgX, lgY = nextLegendPosLeft(scene, fb, lgSz, lgLabelW, 4)
+					}
+
+					scene.Elements = append(scene.Elements,
+						repository.MakeImage(eid+"-lg-ico", lgX, lgY, lgSz, lgSz, lgFid, iconColor, 6201+i))
+
+					lgLblX := lgX + lgSz + 6
+					lgLblY := lgY + (lgSz-float64(lgFs))/2
+					scene.Elements = append(scene.Elements,
+						repository.MakeText(eid+"-lg-lbl", lgLblX, lgLblY, lgLabelW, float64(lgFs+4),
+							displayName, lgFs, "#000000", 6301+i))
+				}
+
+				short := entry.ShortLabel()
+				if short == entry.OfficialName {
+					short = shortServiceName(short)
+				}
+				fmt.Printf("Added %-40s (%s) → (%.0f, %.0f)\n", displayName, short, iconX, iconY)
 			}
 
-			// ── push to canvas ─────────────────────────────────────────────
-			scene := entity.NewScene()
-			scene.Elements = elements
-			scene.Files = files
-
-			client := repository.NewCanvasClient(serverURL)
-			if err := client.Health(); err != nil {
-				return fmt.Errorf("canvas server not reachable at %s: %w", serverURL, err)
+			// ── write back ─────────────────────────────────────────────────
+			if err := repository.WriteScene(scene, targetFile); err != nil {
+				return fmt.Errorf("write scene: %w", err)
 			}
-
-			if noMerge {
-				return client.SyncScene(scene)
-			}
-			if err := client.MergeScene(scene); err != nil {
-				return fmt.Errorf("merge to canvas: %w", err)
-			}
-			fmt.Printf("Added service %s to canvas at %s\n", displayName, serverURL)
-			if !noLegend {
-				fmt.Printf("  legend entry at (%.0f, %.0f)\n", legendX, legendY)
-			}
+			fmt.Printf("Saved → %s\n", targetFile)
 			return nil
 		},
 	}
 
-	cmd.Flags().StringVarP(&serverURL, "server", "s", "", "canvas server URL (default: config canvas.url)")
+	cmd.Flags().StringVarP(&targetFile, "file", "f", "", "target .excalidraw file (default: output/aws-frames/A4-landscape.excalidraw)")
+	cmd.Flags().StringVarP(&listFile, "list", "l", "", "path to a text file with one service name per line (batch mode)")
 	cmd.Flags().StringVar(&category, "category", "", "service icon category, e.g. Arch_Compute (optional, speeds up search)")
-	cmd.Flags().StringVarP(&name, "name", "n", "", "service name to search for, e.g. EC2 (required)")
-	cmd.Flags().Float64Var(&x, "x", 0, "x position of the service icon")
-	cmd.Flags().Float64Var(&y, "y", 0, "y position of the service icon")
+	cmd.Flags().StringVarP(&name, "name", "n", "", "service name to search for (single add mode)")
 	cmd.Flags().IntVar(&size, "size", 64, "icon size in pixels (16 | 32 | 48 | 64)")
-	cmd.Flags().Float64Var(&legendX, "legend-x", 0, "x position of the legend entry (default: x+size+offset_x)")
-	cmd.Flags().Float64Var(&legendY, "legend-y", 0, "y position of the legend entry (default: y+offset_y)")
 	cmd.Flags().BoolVar(&noLegend, "no-legend", false, "omit the legend entry")
-	cmd.Flags().BoolVar(&noMerge, "replace", false, "replace the entire canvas instead of merging")
-	_ = cmd.MarkFlagRequired("name")
 	return cmd
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Layout helpers
+
+// frameBounds returns the bounding box of the first "frame" element,
+// or falls back to the overall element bounding box.
+type frameBBox struct{ x, y, w, h float64 }
+
+func frameBounds(scene *entity.Scene) frameBBox {
+	for _, el := range scene.Elements {
+		t, _ := el["type"].(string)
+		if t == "frame" {
+			x, _ := el["x"].(float64)
+			y, _ := el["y"].(float64)
+			w, _ := el["width"].(float64)
+			h, _ := el["height"].(float64)
+			return frameBBox{x, y, w, h}
+		}
+	}
+	// fallback: overall bounding box
+	minX, minY, maxX, maxY := 1e9, 1e9, -1e9, -1e9
+	for _, el := range scene.Elements {
+		x, _ := el["x"].(float64)
+		y, _ := el["y"].(float64)
+		w, _ := el["width"].(float64)
+		h, _ := el["height"].(float64)
+		if x < minX {
+			minX = x
+		}
+		if y < minY {
+			minY = y
+		}
+		if x+w > maxX {
+			maxX = x + w
+		}
+		if y+h > maxY {
+			maxY = y + h
+		}
+	}
+	if minX == 1e9 {
+		return frameBBox{0, 0, 800, 600}
+	}
+	return frameBBox{minX, minY, maxX - minX, maxY - minY}
+}
+
+// nextIconPos returns the position for the next icon placed outside-bottom
+// of the frame. Icons accumulate left-to-right.
+func nextIconPos(scene *entity.Scene, fb frameBBox, iconSize, gap float64) (x, y float64) {
+	belowY := fb.y + fb.h + 60
+	// find rightmost edge of any element at or below belowY
+	maxRight := fb.x - gap
+	for _, el := range scene.Elements {
+		elY, _ := el["y"].(float64)
+		elX, _ := el["x"].(float64)
+		elW, _ := el["width"].(float64)
+		if elY >= belowY-1 {
+			if elX+elW > maxRight {
+				maxRight = elX + elW
+			}
+		}
+	}
+	return maxRight + gap, belowY
+}
+
+// nextLegendPosRight returns the next legend position stacked on the RIGHT of the frame.
+// Only considers elements within the frame's y-range to avoid being pushed down by
+// below-frame icons whose x may also exceed the frame's right edge.
+func nextLegendPosRight(scene *entity.Scene, fb frameBBox, lgSz, gap float64) (x, y float64) {
+	x = fb.x + fb.w + 40
+	y = fb.y
+	for _, el := range scene.Elements {
+		elX, _ := el["x"].(float64)
+		elY, _ := el["y"].(float64)
+		elH, _ := el["height"].(float64)
+		if elX >= fb.x+fb.w+10 && elY >= fb.y-10 && elY < fb.y+fb.h+40 {
+			if elY+elH > y {
+				y = elY + elH + gap
+			}
+		}
+	}
+	return x, y
+}
+
+// nextLegendPosLeft returns the next legend position stacked on the LEFT of the frame.
+func nextLegendPosLeft(scene *entity.Scene, fb frameBBox, lgSz, lgLabelW, gap float64) (x, y float64) {
+	x = fb.x - lgSz - lgLabelW - 20
+	y = fb.y
+	for _, el := range scene.Elements {
+		elX, _ := el["x"].(float64)
+		elY, _ := el["y"].(float64)
+		elH, _ := el["height"].(float64)
+		if elX < fb.x-5 && elY >= fb.y-10 && elY < fb.y+fb.h+40 {
+			if elY+elH > y {
+				y = elY + elH + gap
+			}
+		}
+	}
+	return x, y
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -180,6 +317,17 @@ func randomHex(n int) string {
 	b := make([]byte, n)
 	_, _ = rand.Read(b)
 	return fmt.Sprintf("%x", b)
+}
+
+// shortServiceName strips common cloud prefixes ("Amazon ", "AWS ") to produce
+// a compact label suitable for narrow icon slots.
+func shortServiceName(name string) string {
+	for _, pfx := range []string{"Amazon ", "AWS "} {
+		if strings.HasPrefix(name, pfx) {
+			return name[len(pfx):]
+		}
+	}
+	return name
 }
 
 // normalizeSvgName derives a display name from an SVG filename.
@@ -201,14 +349,11 @@ func normalizeSvgName(filename string) string {
 }
 
 // findServiceIcon searches Architecture-Service-Icons for an SVG matching name.
-// Prefers the directory matching the requested size; falls back to other sizes.
 func findServiceIcon(assetDir, category, name string, size int) (string, string, error) {
 	archSvc := filepath.Join(assetDir, "Architecture-Service-Icons")
 	lower := strings.ToLower(name)
 
-	// size preference order
 	szDirs := []string{fmt.Sprintf("%d", size), "64", "48", "32", "16"}
-	// deduplicate while preserving order
 	seen := map[string]bool{}
 	var szOrder []string
 	for _, s := range szDirs {
@@ -218,7 +363,23 @@ func findServiceIcon(assetDir, category, name string, size int) (string, string,
 		}
 	}
 
+	normalizeForMatch := func(s string) string {
+		s = strings.ToLower(s)
+		s = strings.ReplaceAll(s, "-", " ")
+		s = strings.ReplaceAll(s, "_", " ")
+		return s
+	}
+	lowerNorm := normalizeForMatch(name)
+
 	walkCat := func(catDir string) (string, string, bool) {
+		// collect all matches, then pick the one with the shortest filename
+		// so "Amazon EC2" prefers Arch_Amazon-EC2_64.svg over Arch_Amazon-EC2-Auto-Scaling_64.svg
+		type candidate struct {
+			path string
+			name string
+			base string
+		}
+		var best *candidate
 		for _, szDir := range szOrder {
 			entries, err := filepath.Glob(filepath.Join(catDir, szDir, "*.svg"))
 			if err != nil || len(entries) == 0 {
@@ -226,10 +387,21 @@ func findServiceIcon(assetDir, category, name string, size int) (string, string,
 			}
 			for _, p := range entries {
 				base := filepath.Base(p)
-				if strings.Contains(strings.ToLower(base), lower) {
-					return p, normalizeSvgName(base), true
+				if strings.Contains(strings.ToLower(base), lower) ||
+					strings.Contains(normalizeForMatch(base), lowerNorm) {
+					c := candidate{p, normalizeSvgName(base), base}
+					if best == nil || len(c.base) < len(best.base) {
+						best = &c
+					}
 				}
 			}
+			if best != nil {
+				// found best in preferred size dir, stop
+				break
+			}
+		}
+		if best != nil {
+			return best.path, best.name, true
 		}
 		return "", "", false
 	}

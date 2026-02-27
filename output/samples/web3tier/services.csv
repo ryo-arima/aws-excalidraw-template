@@ -1,0 +1,12 @@
+# 3-tier Web Architecture サービスリスト
+# 形式: id,正式名称,略語,サービス概要,用途,備考
+id,正式名称,略語,サービス概要,用途,備考
+261,Amazon Route 53,R53,DNSウェブサービス,ドメイン名解決・ヘルスチェック,
+260,Amazon CloudFront,CF,コンテンツ配信ネットワーク (CDN),静的/動的コンテンツの高速配信,
+264,Elastic Load Balancing,ELB,負荷分散サービス,トラフィックを複数インスタンスに分散,
+111,Amazon EC2 Auto Scaling,ASG,自動スケーリング,需要に応じてEC2インスタンス数を自動調整,
+113,Amazon EC2,EC2,仮想サーバー,アプリケーションサーバーとして使用,
+309,Amazon Simple Storage Service,S3,オブジェクトストレージ,静的アセット・バックアップの保存,
+145,Amazon RDS,RDS,マネージドリレーショナルDB,アプリケーションのデータ永続化,
+141,Amazon ElastiCache,EC,インメモリキャッシュ,セッション管理・クエリキャッシュ,
+213,Amazon CloudWatch,CW,監視・オブザーバビリティ,メトリクス収集・アラート・ログ管理,
