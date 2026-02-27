@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-Letter-portrait",
+      "id": "sg-pub-1-c1a1r1-Letter-portrait",
       "x": 80,
       "y": 297,
       "width": 193,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-Letter-portrait-label",
+      "id": "sg-pub-1-c1a1r1-Letter-portrait-label",
       "x": 87,
       "y": 304,
       "width": 173,
@@ -1115,7 +1115,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r1-Letter-portrait",
+      "id": "sg-pub-2-c1a1r1-Letter-portrait",
       "x": 312,
       "y": 297,
       "width": 193,
@@ -1142,7 +1142,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r1-Letter-portrait-label",
+      "id": "sg-pub-2-c1a1r1-Letter-portrait-label",
       "x": 319,
       "y": 304,
       "width": 173,
@@ -1655,7 +1655,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a1r1-Letter-portrait",
+      "id": "sg-pub-3-c1a1r1-Letter-portrait",
       "x": 543,
       "y": 297,
       "width": 193,
@@ -1682,7 +1682,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a1r1-Letter-portrait-label",
+      "id": "sg-pub-3-c1a1r1-Letter-portrait-label",
       "x": 550,
       "y": 304,
       "width": 173,
@@ -2483,7 +2483,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a2r1-Letter-portrait",
+      "id": "sg-pub-1-c1a2r1-Letter-portrait",
       "x": 80,
       "y": 780,
       "width": 193,
@@ -2510,7 +2510,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a2r1-Letter-portrait-label",
+      "id": "sg-pub-1-c1a2r1-Letter-portrait-label",
       "x": 87,
       "y": 787,
       "width": 173,
@@ -3023,7 +3023,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a2r1-Letter-portrait",
+      "id": "sg-pub-2-c1a2r1-Letter-portrait",
       "x": 312,
       "y": 780,
       "width": 193,
@@ -3050,7 +3050,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a2r1-Letter-portrait-label",
+      "id": "sg-pub-2-c1a2r1-Letter-portrait-label",
       "x": 319,
       "y": 787,
       "width": 173,
@@ -3563,7 +3563,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a2r1-Letter-portrait",
+      "id": "sg-pub-3-c1a2r1-Letter-portrait",
       "x": 543,
       "y": 780,
       "width": 193,
@@ -3590,7 +3590,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a2r1-Letter-portrait-label",
+      "id": "sg-pub-3-c1a2r1-Letter-portrait-label",
       "x": 550,
       "y": 787,
       "width": 173,

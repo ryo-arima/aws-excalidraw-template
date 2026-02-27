@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-A1-portrait",
+      "id": "sg-pub-1-c1a1r1-A1-portrait",
       "x": 218,
       "y": 515,
       "width": 306,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-A1-portrait-label",
+      "id": "sg-pub-1-c1a1r1-A1-portrait-label",
       "x": 236,
       "y": 533,
       "width": 275,
@@ -1115,7 +1115,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r1-A1-portrait",
+      "id": "sg-pub-2-c1a1r1-A1-portrait",
       "x": 630,
       "y": 515,
       "width": 306,
@@ -1142,7 +1142,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r1-A1-portrait-label",
+      "id": "sg-pub-2-c1a1r1-A1-portrait-label",
       "x": 648,
       "y": 533,
       "width": 275,
@@ -1943,7 +1943,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a2r1-A1-portrait",
+      "id": "sg-pub-1-c1a2r1-A1-portrait",
       "x": 218,
       "y": 2009,
       "width": 306,
@@ -1970,7 +1970,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a2r1-A1-portrait-label",
+      "id": "sg-pub-1-c1a2r1-A1-portrait-label",
       "x": 236,
       "y": 2027,
       "width": 275,
@@ -2483,7 +2483,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a2r1-A1-portrait",
+      "id": "sg-pub-2-c1a2r1-A1-portrait",
       "x": 630,
       "y": 2009,
       "width": 306,
@@ -2510,7 +2510,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a2r1-A1-portrait-label",
+      "id": "sg-pub-2-c1a2r1-A1-portrait-label",
       "x": 648,
       "y": 2027,
       "width": 275,
@@ -3407,7 +3407,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r1-A1-portrait",
+      "id": "sg-pub-1-c2a1r1-A1-portrait",
       "x": 1310,
       "y": 515,
       "width": 306,
@@ -3434,7 +3434,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r1-A1-portrait-label",
+      "id": "sg-pub-1-c2a1r1-A1-portrait-label",
       "x": 1328,
       "y": 533,
       "width": 275,
@@ -3947,7 +3947,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c2a1r1-A1-portrait",
+      "id": "sg-pub-2-c2a1r1-A1-portrait",
       "x": 1721,
       "y": 515,
       "width": 306,
@@ -3974,7 +3974,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c2a1r1-A1-portrait-label",
+      "id": "sg-pub-2-c2a1r1-A1-portrait-label",
       "x": 1739,
       "y": 533,
       "width": 275,
@@ -4775,7 +4775,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a2r1-A1-portrait",
+      "id": "sg-pub-1-c2a2r1-A1-portrait",
       "x": 1310,
       "y": 2009,
       "width": 306,
@@ -4802,7 +4802,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a2r1-A1-portrait-label",
+      "id": "sg-pub-1-c2a2r1-A1-portrait-label",
       "x": 1328,
       "y": 2027,
       "width": 275,
@@ -5315,7 +5315,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c2a2r1-A1-portrait",
+      "id": "sg-pub-2-c2a2r1-A1-portrait",
       "x": 1721,
       "y": 2009,
       "width": 306,
@@ -5342,7 +5342,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c2a2r1-A1-portrait-label",
+      "id": "sg-pub-2-c2a2r1-A1-portrait-label",
       "x": 1739,
       "y": 2027,
       "width": 275,

@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-A5-landscape",
+      "id": "sg-pub-1-c1a1r1-A5-landscape",
       "x": 61,
       "y": 268,
       "width": 138,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-A5-landscape-label",
+      "id": "sg-pub-1-c1a1r1-A5-landscape-label",
       "x": 66,
       "y": 273,
       "width": 124,
@@ -1115,7 +1115,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r1-A5-landscape",
+      "id": "sg-pub-2-c1a1r1-A5-landscape",
       "x": 228,
       "y": 268,
       "width": 138,
@@ -1142,7 +1142,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r1-A5-landscape-label",
+      "id": "sg-pub-2-c1a1r1-A5-landscape-label",
       "x": 234,
       "y": 273,
       "width": 124,
@@ -1847,7 +1847,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r2-A5-landscape",
+      "id": "sg-pub-1-c1a1r2-A5-landscape",
       "x": 428,
       "y": 268,
       "width": 138,
@@ -1874,7 +1874,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r2-A5-landscape-label",
+      "id": "sg-pub-1-c1a1r2-A5-landscape-label",
       "x": 433,
       "y": 273,
       "width": 124,
@@ -2387,7 +2387,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r2-A5-landscape",
+      "id": "sg-pub-2-c1a1r2-A5-landscape",
       "x": 596,
       "y": 268,
       "width": 138,
@@ -2414,7 +2414,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r2-A5-landscape-label",
+      "id": "sg-pub-2-c1a1r2-A5-landscape-label",
       "x": 600,
       "y": 273,
       "width": 124,
@@ -3215,7 +3215,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a2r1-A5-landscape",
+      "id": "sg-pub-1-c1a2r1-A5-landscape",
       "x": 61,
       "y": 429,
       "width": 138,
@@ -3242,7 +3242,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a2r1-A5-landscape-label",
+      "id": "sg-pub-1-c1a2r1-A5-landscape-label",
       "x": 66,
       "y": 434,
       "width": 124,
@@ -3755,7 +3755,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a2r1-A5-landscape",
+      "id": "sg-pub-2-c1a2r1-A5-landscape",
       "x": 228,
       "y": 429,
       "width": 138,
@@ -3782,7 +3782,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a2r1-A5-landscape-label",
+      "id": "sg-pub-2-c1a2r1-A5-landscape-label",
       "x": 234,
       "y": 434,
       "width": 124,
@@ -4487,7 +4487,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a2r2-A5-landscape",
+      "id": "sg-pub-1-c1a2r2-A5-landscape",
       "x": 428,
       "y": 429,
       "width": 138,
@@ -4514,7 +4514,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a2r2-A5-landscape-label",
+      "id": "sg-pub-1-c1a2r2-A5-landscape-label",
       "x": 433,
       "y": 434,
       "width": 124,
@@ -5027,7 +5027,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a2r2-A5-landscape",
+      "id": "sg-pub-2-c1a2r2-A5-landscape",
       "x": 596,
       "y": 429,
       "width": 138,
@@ -5054,7 +5054,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a2r2-A5-landscape-label",
+      "id": "sg-pub-2-c1a2r2-A5-landscape-label",
       "x": 600,
       "y": 434,
       "width": 124,
@@ -5855,7 +5855,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a3r1-A5-landscape",
+      "id": "sg-pub-1-c1a3r1-A5-landscape",
       "x": 61,
       "y": 589,
       "width": 138,
@@ -5882,7 +5882,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a3r1-A5-landscape-label",
+      "id": "sg-pub-1-c1a3r1-A5-landscape-label",
       "x": 66,
       "y": 594,
       "width": 124,
@@ -6395,7 +6395,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a3r1-A5-landscape",
+      "id": "sg-pub-2-c1a3r1-A5-landscape",
       "x": 228,
       "y": 589,
       "width": 138,
@@ -6422,7 +6422,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a3r1-A5-landscape-label",
+      "id": "sg-pub-2-c1a3r1-A5-landscape-label",
       "x": 234,
       "y": 594,
       "width": 124,
@@ -7127,7 +7127,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a3r2-A5-landscape",
+      "id": "sg-pub-1-c1a3r2-A5-landscape",
       "x": 428,
       "y": 589,
       "width": 138,
@@ -7154,7 +7154,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a3r2-A5-landscape-label",
+      "id": "sg-pub-1-c1a3r2-A5-landscape-label",
       "x": 433,
       "y": 594,
       "width": 124,
@@ -7667,7 +7667,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a3r2-A5-landscape",
+      "id": "sg-pub-2-c1a3r2-A5-landscape",
       "x": 596,
       "y": 589,
       "width": 138,
@@ -7694,7 +7694,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a3r2-A5-landscape-label",
+      "id": "sg-pub-2-c1a3r2-A5-landscape-label",
       "x": 600,
       "y": 594,
       "width": 124,

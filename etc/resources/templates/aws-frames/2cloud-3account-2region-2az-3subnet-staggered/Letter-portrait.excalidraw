@@ -638,7 +638,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-Letter-portrait",
+      "id": "sg-pub-1-c1a1r1-Letter-portrait",
       "x": 80,
       "y": 297,
       "width": 76,
@@ -665,7 +665,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-Letter-portrait-label",
+      "id": "sg-pub-1-c1a1r1-Letter-portrait-label",
       "x": 87,
       "y": 304,
       "width": 69,
@@ -1433,7 +1433,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r2-Letter-portrait",
+      "id": "sg-pub-1-c1a1r2-Letter-portrait",
       "x": 251,
       "y": 297,
       "width": 76,
@@ -1460,7 +1460,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r2-Letter-portrait-label",
+      "id": "sg-pub-1-c1a1r2-Letter-portrait-label",
       "x": 258,
       "y": 304,
       "width": 69,
@@ -2324,7 +2324,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a2r1-Letter-portrait",
+      "id": "sg-pub-1-c1a2r1-Letter-portrait",
       "x": 80,
       "y": 619,
       "width": 76,
@@ -2351,7 +2351,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a2r1-Letter-portrait-label",
+      "id": "sg-pub-1-c1a2r1-Letter-portrait-label",
       "x": 87,
       "y": 626,
       "width": 69,
@@ -3119,7 +3119,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a2r2-Letter-portrait",
+      "id": "sg-pub-1-c1a2r2-Letter-portrait",
       "x": 251,
       "y": 619,
       "width": 76,
@@ -3146,7 +3146,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a2r2-Letter-portrait-label",
+      "id": "sg-pub-1-c1a2r2-Letter-portrait-label",
       "x": 258,
       "y": 626,
       "width": 69,
@@ -4010,7 +4010,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a3r1-Letter-portrait",
+      "id": "sg-pub-1-c1a3r1-Letter-portrait",
       "x": 80,
       "y": 941,
       "width": 76,
@@ -4037,7 +4037,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a3r1-Letter-portrait-label",
+      "id": "sg-pub-1-c1a3r1-Letter-portrait-label",
       "x": 87,
       "y": 948,
       "width": 69,
@@ -4805,7 +4805,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a3r2-Letter-portrait",
+      "id": "sg-pub-1-c1a3r2-Letter-portrait",
       "x": 251,
       "y": 941,
       "width": 76,
@@ -4832,7 +4832,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a3r2-Letter-portrait-label",
+      "id": "sg-pub-1-c1a3r2-Letter-portrait-label",
       "x": 258,
       "y": 948,
       "width": 69,
@@ -5792,7 +5792,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r1-Letter-portrait",
+      "id": "sg-pub-1-c2a1r1-Letter-portrait",
       "x": 476,
       "y": 297,
       "width": 76,
@@ -5819,7 +5819,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r1-Letter-portrait-label",
+      "id": "sg-pub-1-c2a1r1-Letter-portrait-label",
       "x": 484,
       "y": 304,
       "width": 69,
@@ -6587,7 +6587,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r2-Letter-portrait",
+      "id": "sg-pub-1-c2a1r2-Letter-portrait",
       "x": 648,
       "y": 297,
       "width": 76,
@@ -6614,7 +6614,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r2-Letter-portrait-label",
+      "id": "sg-pub-1-c2a1r2-Letter-portrait-label",
       "x": 655,
       "y": 304,
       "width": 69,
@@ -7478,7 +7478,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a2r1-Letter-portrait",
+      "id": "sg-pub-1-c2a2r1-Letter-portrait",
       "x": 476,
       "y": 619,
       "width": 76,
@@ -7505,7 +7505,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a2r1-Letter-portrait-label",
+      "id": "sg-pub-1-c2a2r1-Letter-portrait-label",
       "x": 484,
       "y": 626,
       "width": 69,
@@ -8273,7 +8273,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a2r2-Letter-portrait",
+      "id": "sg-pub-1-c2a2r2-Letter-portrait",
       "x": 648,
       "y": 619,
       "width": 76,
@@ -8300,7 +8300,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a2r2-Letter-portrait-label",
+      "id": "sg-pub-1-c2a2r2-Letter-portrait-label",
       "x": 655,
       "y": 626,
       "width": 69,
@@ -9164,7 +9164,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a3r1-Letter-portrait",
+      "id": "sg-pub-1-c2a3r1-Letter-portrait",
       "x": 476,
       "y": 941,
       "width": 76,
@@ -9191,7 +9191,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a3r1-Letter-portrait-label",
+      "id": "sg-pub-1-c2a3r1-Letter-portrait-label",
       "x": 484,
       "y": 948,
       "width": 69,
@@ -9959,7 +9959,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a3r2-Letter-portrait",
+      "id": "sg-pub-1-c2a3r2-Letter-portrait",
       "x": 648,
       "y": 941,
       "width": 76,
@@ -9986,7 +9986,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a3r2-Letter-portrait-label",
+      "id": "sg-pub-1-c2a3r2-Letter-portrait-label",
       "x": 655,
       "y": 948,
       "width": 69,

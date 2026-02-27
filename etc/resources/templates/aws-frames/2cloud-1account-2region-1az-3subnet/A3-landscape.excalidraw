@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-A3-landscape",
+      "id": "sg-pub-1-c1a1r1-A3-landscape",
       "x": 109,
       "y": 341,
       "width": 240,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-A3-landscape-label",
+      "id": "sg-pub-1-c1a1r1-A3-landscape-label",
       "x": 118,
       "y": 350,
       "width": 216,
@@ -1307,7 +1307,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r2-A3-landscape",
+      "id": "sg-pub-1-c1a1r2-A3-landscape",
       "x": 460,
       "y": 341,
       "width": 240,
@@ -1334,7 +1334,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r2-A3-landscape-label",
+      "id": "sg-pub-1-c1a1r2-A3-landscape-label",
       "x": 469,
       "y": 350,
       "width": 216,
@@ -2231,7 +2231,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r1-A3-landscape",
+      "id": "sg-pub-1-c2a1r1-A3-landscape",
       "x": 886,
       "y": 341,
       "width": 240,
@@ -2258,7 +2258,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r1-A3-landscape-label",
+      "id": "sg-pub-1-c2a1r1-A3-landscape-label",
       "x": 896,
       "y": 350,
       "width": 216,
@@ -2963,7 +2963,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r2-A3-landscape",
+      "id": "sg-pub-1-c2a1r2-A3-landscape",
       "x": 1238,
       "y": 341,
       "width": 240,
@@ -2990,7 +2990,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r2-A3-landscape-label",
+      "id": "sg-pub-1-c2a1r2-A3-landscape-label",
       "x": 1247,
       "y": 350,
       "width": 216,

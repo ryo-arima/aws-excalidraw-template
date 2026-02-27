@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-Legal-landscape",
+      "id": "sg-pub-1-c1a1r1-Legal-landscape",
       "x": 80,
       "y": 297,
       "width": 47,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-Legal-landscape-label",
+      "id": "sg-pub-1-c1a1r1-Legal-landscape-label",
       "x": 87,
       "y": 304,
       "width": 43,
@@ -1115,7 +1115,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r1-Legal-landscape",
+      "id": "sg-pub-2-c1a1r1-Legal-landscape",
       "x": 166,
       "y": 297,
       "width": 47,
@@ -1142,7 +1142,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r1-Legal-landscape-label",
+      "id": "sg-pub-2-c1a1r1-Legal-landscape-label",
       "x": 173,
       "y": 304,
       "width": 43,
@@ -1655,7 +1655,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a1r1-Legal-landscape",
+      "id": "sg-pub-3-c1a1r1-Legal-landscape",
       "x": 253,
       "y": 297,
       "width": 47,
@@ -1682,7 +1682,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a1r1-Legal-landscape-label",
+      "id": "sg-pub-3-c1a1r1-Legal-landscape-label",
       "x": 260,
       "y": 304,
       "width": 43,
@@ -2387,7 +2387,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r2-Legal-landscape",
+      "id": "sg-pub-1-c1a1r2-Legal-landscape",
       "x": 383,
       "y": 297,
       "width": 47,
@@ -2414,7 +2414,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r2-Legal-landscape-label",
+      "id": "sg-pub-1-c1a1r2-Legal-landscape-label",
       "x": 390,
       "y": 304,
       "width": 43,
@@ -2927,7 +2927,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r2-Legal-landscape",
+      "id": "sg-pub-2-c1a1r2-Legal-landscape",
       "x": 470,
       "y": 297,
       "width": 47,
@@ -2954,7 +2954,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r2-Legal-landscape-label",
+      "id": "sg-pub-2-c1a1r2-Legal-landscape-label",
       "x": 477,
       "y": 304,
       "width": 43,
@@ -3467,7 +3467,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a1r2-Legal-landscape",
+      "id": "sg-pub-3-c1a1r2-Legal-landscape",
       "x": 556,
       "y": 297,
       "width": 47,
@@ -3494,7 +3494,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a1r2-Legal-landscape-label",
+      "id": "sg-pub-3-c1a1r2-Legal-landscape-label",
       "x": 563,
       "y": 304,
       "width": 43,
@@ -4391,7 +4391,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r1-Legal-landscape",
+      "id": "sg-pub-1-c2a1r1-Legal-landscape",
       "x": 740,
       "y": 297,
       "width": 47,
@@ -4418,7 +4418,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r1-Legal-landscape-label",
+      "id": "sg-pub-1-c2a1r1-Legal-landscape-label",
       "x": 748,
       "y": 304,
       "width": 43,
@@ -4931,7 +4931,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c2a1r1-Legal-landscape",
+      "id": "sg-pub-2-c2a1r1-Legal-landscape",
       "x": 827,
       "y": 297,
       "width": 47,
@@ -4958,7 +4958,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c2a1r1-Legal-landscape-label",
+      "id": "sg-pub-2-c2a1r1-Legal-landscape-label",
       "x": 834,
       "y": 304,
       "width": 43,
@@ -5471,7 +5471,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c2a1r1-Legal-landscape",
+      "id": "sg-pub-3-c2a1r1-Legal-landscape",
       "x": 913,
       "y": 297,
       "width": 47,
@@ -5498,7 +5498,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c2a1r1-Legal-landscape-label",
+      "id": "sg-pub-3-c2a1r1-Legal-landscape-label",
       "x": 920,
       "y": 304,
       "width": 43,
@@ -6203,7 +6203,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r2-Legal-landscape",
+      "id": "sg-pub-1-c2a1r2-Legal-landscape",
       "x": 1044,
       "y": 297,
       "width": 47,
@@ -6230,7 +6230,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r2-Legal-landscape-label",
+      "id": "sg-pub-1-c2a1r2-Legal-landscape-label",
       "x": 1051,
       "y": 304,
       "width": 43,
@@ -6743,7 +6743,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c2a1r2-Legal-landscape",
+      "id": "sg-pub-2-c2a1r2-Legal-landscape",
       "x": 1130,
       "y": 297,
       "width": 47,
@@ -6770,7 +6770,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c2a1r2-Legal-landscape-label",
+      "id": "sg-pub-2-c2a1r2-Legal-landscape-label",
       "x": 1137,
       "y": 304,
       "width": 43,
@@ -7283,7 +7283,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c2a1r2-Legal-landscape",
+      "id": "sg-pub-3-c2a1r2-Legal-landscape",
       "x": 1217,
       "y": 297,
       "width": 47,
@@ -7310,7 +7310,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c2a1r2-Legal-landscape-label",
+      "id": "sg-pub-3-c2a1r2-Legal-landscape-label",
       "x": 1224,
       "y": 304,
       "width": 43,

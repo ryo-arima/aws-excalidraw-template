@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-Letter-landscape",
+      "id": "sg-pub-1-c1a1r1-Letter-landscape",
       "x": 80,
       "y": 297,
       "width": 380,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-Letter-landscape-label",
+      "id": "sg-pub-1-c1a1r1-Letter-landscape-label",
       "x": 87,
       "y": 304,
       "width": 342,
@@ -1403,7 +1403,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a2r1-Letter-landscape",
+      "id": "sg-pub-1-c1a2r1-Letter-landscape",
       "x": 80,
       "y": 539,
       "width": 380,
@@ -1430,7 +1430,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a2r1-Letter-landscape-label",
+      "id": "sg-pub-1-c1a2r1-Letter-landscape-label",
       "x": 87,
       "y": 546,
       "width": 342,
@@ -2231,7 +2231,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a3r1-Letter-landscape",
+      "id": "sg-pub-1-c1a3r1-Letter-landscape",
       "x": 80,
       "y": 781,
       "width": 380,
@@ -2258,7 +2258,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a3r1-Letter-landscape-label",
+      "id": "sg-pub-1-c1a3r1-Letter-landscape-label",
       "x": 87,
       "y": 788,
       "width": 342,
@@ -3155,7 +3155,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r1-Letter-landscape",
+      "id": "sg-pub-1-c2a1r1-Letter-landscape",
       "x": 596,
       "y": 297,
       "width": 380,
@@ -3182,7 +3182,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r1-Letter-landscape-label",
+      "id": "sg-pub-1-c2a1r1-Letter-landscape-label",
       "x": 604,
       "y": 304,
       "width": 342,
@@ -3983,7 +3983,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a2r1-Letter-landscape",
+      "id": "sg-pub-1-c2a2r1-Letter-landscape",
       "x": 596,
       "y": 539,
       "width": 380,
@@ -4010,7 +4010,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a2r1-Letter-landscape-label",
+      "id": "sg-pub-1-c2a2r1-Letter-landscape-label",
       "x": 604,
       "y": 546,
       "width": 342,
@@ -4811,7 +4811,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a3r1-Letter-landscape",
+      "id": "sg-pub-1-c2a3r1-Letter-landscape",
       "x": 596,
       "y": 781,
       "width": 380,
@@ -4838,7 +4838,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a3r1-Letter-landscape-label",
+      "id": "sg-pub-1-c2a3r1-Letter-landscape-label",
       "x": 604,
       "y": 788,
       "width": 342,

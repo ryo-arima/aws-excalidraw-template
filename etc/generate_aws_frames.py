@@ -539,19 +539,13 @@ def build_scene(W, H, suffix, icon_files,
 
                     az_header = p3 + fs_az + p3
 
-                    # subnets inside AZ (3 layers: Public / Private 1 / Private 2)
+                    # subnets inside AZ (n_subnets layers: 1st=Public, 2nd+=Private)
                     # sub_gap はアイコン1個を配置できる幅を確保
                     sub_gap   = max(ico_sub + p4 * 2, round(base * 0.01))
                     sub_x     = az_x + p3
                     sub_w_val = az_w - p3 * 2
-                    sub_h_val = (az_h - az_header - p3 - sub_gap * 2) / 3
-                    pub_y     = az_y + az_header
-                    priv1_y   = pub_y   + sub_h_val + sub_gap
-                    priv2_y   = priv1_y + sub_h_val + sub_gap
-
-                    pub_eid   = f"pub-sub{zidx}-c{cidx}a{aidx}r{ridx}-{suffix}"
-                    priv1_eid = f"priv1-sub{zidx}-c{cidx}a{aidx}r{ridx}-{suffix}"
-                    priv2_eid = f"priv2-sub{zidx}-c{cidx}a{aidx}r{ridx}-{suffix}"
+                    sub_h_val = (az_h - az_header - p3 - sub_gap * (n_subnets - 1)) / n_subnets
+                    sub_top_y = az_y + az_header
 
                     st_pub  = STYLE["pub_sub"]
                     st_priv = STYLE["priv_sub"]
@@ -574,47 +568,38 @@ def build_scene(W, H, suffix, icon_files,
                             "Security Group", fs_sg,
                             sg_label, bold=True, seed=s)); return s + 1
 
-                    # ── Public Subnet ─────────────────────────────────
-                    elements.append(make_rect(
-                        pub_eid, sub_x, pub_y, sub_w_val, sub_h_val,
-                        sub_pub_stroke, st_pub["stroke_style"], st_pub["fill"],
-                        stroke_width=st_pub["stroke_width"], seed=s)); s += 1
-                    s = add_header(elements, files, icon_files,
-                                   pub_eid, "Public-subnet_32.svg",
-                                   "Public Subnet", sub_pub_label,
-                                   sub_x, pub_y, ico_sub, fs_sub, p4, s)
-                    pub_inner_y = pub_y + ico_sub + p4
-                    sg_pub_eid  = f"sg-pub{zidx}-c{cidx}a{aidx}r{ridx}-{suffix}"
-                    s = _add_sg(sg_pub_eid, pub_inner_y, sub_h_val, pub_y)
-                    s = _add_sg_label(sg_pub_eid, pub_inner_y)
+                    for si in range(n_subnets):
+                        sub_y = sub_top_y + si * (sub_h_val + sub_gap)
 
-                    # ── Private Subnet 1 ──────────────────────────────
-                    elements.append(make_rect(
-                        priv1_eid, sub_x, priv1_y, sub_w_val, sub_h_val,
-                        sub_priv_stroke, st_priv["stroke_style"], st_priv["fill"],
-                        stroke_width=st_priv["stroke_width"], seed=s)); s += 1
-                    s = add_header(elements, files, icon_files,
-                                   priv1_eid, "Private-subnet_32.svg",
-                                   "Private Subnet", sub_priv_label,
-                                   sub_x, priv1_y, ico_sub, fs_sub, p4, s)
-                    priv1_inner_y = priv1_y + ico_sub + p4
-                    sg_priv1_eid  = f"sg-priv1-{zidx}-c{cidx}a{aidx}r{ridx}-{suffix}"
-                    s = _add_sg(sg_priv1_eid, priv1_inner_y, sub_h_val, priv1_y)
-                    s = _add_sg_label(sg_priv1_eid, priv1_inner_y)
+                        if si == 0:
+                            subnet_label = "Public Subnet"
+                            subnet_style = st_pub
+                            subnet_stroke = sub_pub_stroke
+                            subnet_label_color = sub_pub_label
+                            subnet_icon = "Public-subnet_32.svg"
+                            subnet_prefix = "pub"
+                        else:
+                            subnet_label = "Private Subnet" if si == 1 else f"Private Subnet {si}"
+                            subnet_style = st_priv
+                            subnet_stroke = sub_priv_stroke
+                            subnet_label_color = sub_priv_label
+                            subnet_icon = "Private-subnet_32.svg"
+                            subnet_prefix = f"priv{si}"
 
-                    # ── Private Subnet 2 ──────────────────────────────
-                    elements.append(make_rect(
-                        priv2_eid, sub_x, priv2_y, sub_w_val, sub_h_val,
-                        sub_priv_stroke, st_priv["stroke_style"], st_priv["fill"],
-                        stroke_width=st_priv["stroke_width"], seed=s)); s += 1
-                    s = add_header(elements, files, icon_files,
-                                   priv2_eid, "Private-subnet_32.svg",
-                                   "Private Subnet 2", sub_priv_label,
-                                   sub_x, priv2_y, ico_sub, fs_sub, p4, s)
-                    priv2_inner_y = priv2_y + ico_sub + p4
-                    sg_priv2_eid  = f"sg-priv2-{zidx}-c{cidx}a{aidx}r{ridx}-{suffix}"
-                    s = _add_sg(sg_priv2_eid, priv2_inner_y, sub_h_val, priv2_y)
-                    s = _add_sg_label(sg_priv2_eid, priv2_inner_y)
+                        sub_eid = f"{subnet_prefix}-sub{zidx}-c{cidx}a{aidx}r{ridx}-{suffix}"
+                        elements.append(make_rect(
+                            sub_eid, sub_x, sub_y, sub_w_val, sub_h_val,
+                            subnet_stroke, subnet_style["stroke_style"], subnet_style["fill"],
+                            stroke_width=subnet_style["stroke_width"], seed=s)); s += 1
+                        s = add_header(elements, files, icon_files,
+                                       sub_eid, subnet_icon,
+                                       subnet_label, subnet_label_color,
+                                       sub_x, sub_y, ico_sub, fs_sub, p4, s)
+
+                        sub_inner_y = sub_y + ico_sub + p4
+                        sg_eid = f"sg-{subnet_prefix}-{zidx}-c{cidx}a{aidx}r{ridx}-{suffix}"
+                        s = _add_sg(sg_eid, sub_inner_y, sub_h_val, sub_y)
+                        s = _add_sg_label(sg_eid, sub_inner_y)
 
     return elements, files
 

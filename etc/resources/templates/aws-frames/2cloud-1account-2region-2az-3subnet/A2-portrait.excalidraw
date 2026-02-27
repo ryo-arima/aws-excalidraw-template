@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-A2-portrait",
+      "id": "sg-pub-1-c1a1r1-A2-portrait",
       "x": 153,
       "y": 410,
       "width": 51,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-A2-portrait-label",
+      "id": "sg-pub-1-c1a1r1-A2-portrait-label",
       "x": 166,
       "y": 423,
       "width": 46,
@@ -1115,7 +1115,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r1-A2-portrait",
+      "id": "sg-pub-2-c1a1r1-A2-portrait",
       "x": 278,
       "y": 410,
       "width": 51,
@@ -1142,7 +1142,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r1-A2-portrait-label",
+      "id": "sg-pub-2-c1a1r1-A2-portrait-label",
       "x": 291,
       "y": 423,
       "width": 46,
@@ -1847,7 +1847,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r2-A2-portrait",
+      "id": "sg-pub-1-c1a1r2-A2-portrait",
       "x": 486,
       "y": 410,
       "width": 51,
@@ -1874,7 +1874,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r2-A2-portrait-label",
+      "id": "sg-pub-1-c1a1r2-A2-portrait-label",
       "x": 500,
       "y": 423,
       "width": 46,
@@ -2387,7 +2387,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r2-A2-portrait",
+      "id": "sg-pub-2-c1a1r2-A2-portrait",
       "x": 612,
       "y": 410,
       "width": 51,
@@ -2414,7 +2414,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r2-A2-portrait-label",
+      "id": "sg-pub-2-c1a1r2-A2-portrait-label",
       "x": 625,
       "y": 423,
       "width": 46,
@@ -3311,7 +3311,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r1-A2-portrait",
+      "id": "sg-pub-1-c2a1r1-A2-portrait",
       "x": 924,
       "y": 410,
       "width": 51,
@@ -3338,7 +3338,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r1-A2-portrait-label",
+      "id": "sg-pub-1-c2a1r1-A2-portrait-label",
       "x": 937,
       "y": 423,
       "width": 46,
@@ -3851,7 +3851,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c2a1r1-A2-portrait",
+      "id": "sg-pub-2-c2a1r1-A2-portrait",
       "x": 1049,
       "y": 410,
       "width": 51,
@@ -3878,7 +3878,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c2a1r1-A2-portrait-label",
+      "id": "sg-pub-2-c2a1r1-A2-portrait-label",
       "x": 1062,
       "y": 423,
       "width": 46,
@@ -4583,7 +4583,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r2-A2-portrait",
+      "id": "sg-pub-1-c2a1r2-A2-portrait",
       "x": 1258,
       "y": 410,
       "width": 51,
@@ -4610,7 +4610,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r2-A2-portrait-label",
+      "id": "sg-pub-1-c2a1r2-A2-portrait-label",
       "x": 1270,
       "y": 423,
       "width": 46,
@@ -5123,7 +5123,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c2a1r2-A2-portrait",
+      "id": "sg-pub-2-c2a1r2-A2-portrait",
       "x": 1383,
       "y": 410,
       "width": 51,
@@ -5150,7 +5150,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c2a1r2-A2-portrait-label",
+      "id": "sg-pub-2-c2a1r2-A2-portrait-label",
       "x": 1396,
       "y": 423,
       "width": 46,

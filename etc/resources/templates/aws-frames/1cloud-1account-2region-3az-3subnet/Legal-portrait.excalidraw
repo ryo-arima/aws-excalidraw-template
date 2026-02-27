@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-Legal-portrait",
+      "id": "sg-pub-1-c1a1r1-Legal-portrait",
       "x": 80,
       "y": 297,
       "width": 70,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-Legal-portrait-label",
+      "id": "sg-pub-1-c1a1r1-Legal-portrait-label",
       "x": 87,
       "y": 304,
       "width": 63,
@@ -1115,7 +1115,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r1-Legal-portrait",
+      "id": "sg-pub-2-c1a1r1-Legal-portrait",
       "x": 188,
       "y": 297,
       "width": 70,
@@ -1142,7 +1142,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r1-Legal-portrait-label",
+      "id": "sg-pub-2-c1a1r1-Legal-portrait-label",
       "x": 196,
       "y": 304,
       "width": 63,
@@ -1655,7 +1655,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a1r1-Legal-portrait",
+      "id": "sg-pub-3-c1a1r1-Legal-portrait",
       "x": 297,
       "y": 297,
       "width": 70,
@@ -1682,7 +1682,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a1r1-Legal-portrait-label",
+      "id": "sg-pub-3-c1a1r1-Legal-portrait-label",
       "x": 304,
       "y": 304,
       "width": 63,
@@ -2387,7 +2387,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r2-Legal-portrait",
+      "id": "sg-pub-1-c1a1r2-Legal-portrait",
       "x": 450,
       "y": 297,
       "width": 70,
@@ -2414,7 +2414,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r2-Legal-portrait-label",
+      "id": "sg-pub-1-c1a1r2-Legal-portrait-label",
       "x": 456,
       "y": 304,
       "width": 63,
@@ -2927,7 +2927,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r2-Legal-portrait",
+      "id": "sg-pub-2-c1a1r2-Legal-portrait",
       "x": 558,
       "y": 297,
       "width": 70,
@@ -2954,7 +2954,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r2-Legal-portrait-label",
+      "id": "sg-pub-2-c1a1r2-Legal-portrait-label",
       "x": 565,
       "y": 304,
       "width": 63,
@@ -3467,7 +3467,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a1r2-Legal-portrait",
+      "id": "sg-pub-3-c1a1r2-Legal-portrait",
       "x": 666,
       "y": 297,
       "width": 70,
@@ -3494,7 +3494,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a1r2-Legal-portrait-label",
+      "id": "sg-pub-3-c1a1r2-Legal-portrait-label",
       "x": 674,
       "y": 304,
       "width": 63,

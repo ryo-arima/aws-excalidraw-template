@@ -638,7 +638,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-A2-landscape",
+      "id": "sg-pub-1-c1a1r1-A2-landscape",
       "x": 153,
       "y": 410,
       "width": 1915,
@@ -665,7 +665,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-A2-landscape-label",
+      "id": "sg-pub-1-c1a1r1-A2-landscape-label",
       "x": 166,
       "y": 423,
       "width": 1724,

@@ -638,7 +638,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-Legal-portrait",
+      "id": "sg-pub-1-c1a1r1-Legal-portrait",
       "x": 80,
       "y": 297,
       "width": 248,
@@ -665,7 +665,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-Legal-portrait-label",
+      "id": "sg-pub-1-c1a1r1-Legal-portrait-label",
       "x": 87,
       "y": 304,
       "width": 223,
@@ -1625,7 +1625,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r1-Legal-portrait",
+      "id": "sg-pub-1-c2a1r1-Legal-portrait",
       "x": 476,
       "y": 297,
       "width": 248,
@@ -1652,7 +1652,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r1-Legal-portrait-label",
+      "id": "sg-pub-1-c2a1r1-Legal-portrait-label",
       "x": 484,
       "y": 304,
       "width": 223,

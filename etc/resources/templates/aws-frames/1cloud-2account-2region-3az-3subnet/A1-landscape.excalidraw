@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-A1-landscape",
+      "id": "sg-pub-1-c1a1r1-A1-landscape",
       "x": 218,
       "y": 515,
       "width": 349,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-A1-landscape-label",
+      "id": "sg-pub-1-c1a1r1-A1-landscape-label",
       "x": 236,
       "y": 533,
       "width": 314,
@@ -1115,7 +1115,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r1-A1-landscape",
+      "id": "sg-pub-2-c1a1r1-A1-landscape",
       "x": 673,
       "y": 515,
       "width": 349,
@@ -1142,7 +1142,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r1-A1-landscape-label",
+      "id": "sg-pub-2-c1a1r1-A1-landscape-label",
       "x": 691,
       "y": 533,
       "width": 314,
@@ -1655,7 +1655,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a1r1-A1-landscape",
+      "id": "sg-pub-3-c1a1r1-A1-landscape",
       "x": 1129,
       "y": 515,
       "width": 349,
@@ -1682,7 +1682,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a1r1-A1-landscape-label",
+      "id": "sg-pub-3-c1a1r1-A1-landscape-label",
       "x": 1147,
       "y": 533,
       "width": 314,
@@ -2387,7 +2387,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r2-A1-landscape",
+      "id": "sg-pub-1-c1a1r2-A1-landscape",
       "x": 1701,
       "y": 515,
       "width": 349,
@@ -2414,7 +2414,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r2-A1-landscape-label",
+      "id": "sg-pub-1-c1a1r2-A1-landscape-label",
       "x": 1719,
       "y": 533,
       "width": 314,
@@ -2927,7 +2927,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r2-A1-landscape",
+      "id": "sg-pub-2-c1a1r2-A1-landscape",
       "x": 2156,
       "y": 515,
       "width": 349,
@@ -2954,7 +2954,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r2-A1-landscape-label",
+      "id": "sg-pub-2-c1a1r2-A1-landscape-label",
       "x": 2174,
       "y": 533,
       "width": 314,
@@ -3467,7 +3467,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a1r2-A1-landscape",
+      "id": "sg-pub-3-c1a1r2-A1-landscape",
       "x": 2612,
       "y": 515,
       "width": 349,
@@ -3494,7 +3494,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a1r2-A1-landscape-label",
+      "id": "sg-pub-3-c1a1r2-A1-landscape-label",
       "x": 2630,
       "y": 533,
       "width": 314,
@@ -4295,7 +4295,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a2r1-A1-landscape",
+      "id": "sg-pub-1-c1a2r1-A1-landscape",
       "x": 218,
       "y": 1542,
       "width": 349,
@@ -4322,7 +4322,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a2r1-A1-landscape-label",
+      "id": "sg-pub-1-c1a2r1-A1-landscape-label",
       "x": 236,
       "y": 1560,
       "width": 314,
@@ -4835,7 +4835,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a2r1-A1-landscape",
+      "id": "sg-pub-2-c1a2r1-A1-landscape",
       "x": 673,
       "y": 1542,
       "width": 349,
@@ -4862,7 +4862,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a2r1-A1-landscape-label",
+      "id": "sg-pub-2-c1a2r1-A1-landscape-label",
       "x": 691,
       "y": 1560,
       "width": 314,
@@ -5375,7 +5375,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a2r1-A1-landscape",
+      "id": "sg-pub-3-c1a2r1-A1-landscape",
       "x": 1129,
       "y": 1542,
       "width": 349,
@@ -5402,7 +5402,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a2r1-A1-landscape-label",
+      "id": "sg-pub-3-c1a2r1-A1-landscape-label",
       "x": 1147,
       "y": 1560,
       "width": 314,
@@ -6107,7 +6107,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a2r2-A1-landscape",
+      "id": "sg-pub-1-c1a2r2-A1-landscape",
       "x": 1701,
       "y": 1542,
       "width": 349,
@@ -6134,7 +6134,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a2r2-A1-landscape-label",
+      "id": "sg-pub-1-c1a2r2-A1-landscape-label",
       "x": 1719,
       "y": 1560,
       "width": 314,
@@ -6647,7 +6647,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a2r2-A1-landscape",
+      "id": "sg-pub-2-c1a2r2-A1-landscape",
       "x": 2156,
       "y": 1542,
       "width": 349,
@@ -6674,7 +6674,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a2r2-A1-landscape-label",
+      "id": "sg-pub-2-c1a2r2-A1-landscape-label",
       "x": 2174,
       "y": 1560,
       "width": 314,
@@ -7187,7 +7187,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a2r2-A1-landscape",
+      "id": "sg-pub-3-c1a2r2-A1-landscape",
       "x": 2612,
       "y": 1542,
       "width": 349,
@@ -7214,7 +7214,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a2r2-A1-landscape-label",
+      "id": "sg-pub-3-c1a2r2-A1-landscape-label",
       "x": 2630,
       "y": 1560,
       "width": 314,

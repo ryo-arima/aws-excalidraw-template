@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-A2-portrait",
+      "id": "sg-pub-1-c1a1r1-A2-portrait",
       "x": 153,
       "y": 410,
       "width": 604,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-A2-portrait-label",
+      "id": "sg-pub-1-c1a1r1-A2-portrait-label",
       "x": 166,
       "y": 423,
       "width": 543,
@@ -1115,7 +1115,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r1-A2-portrait",
+      "id": "sg-pub-2-c1a1r1-A2-portrait",
       "x": 830,
       "y": 410,
       "width": 604,
@@ -1142,7 +1142,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r1-A2-portrait-label",
+      "id": "sg-pub-2-c1a1r1-A2-portrait-label",
       "x": 844,
       "y": 423,
       "width": 543,

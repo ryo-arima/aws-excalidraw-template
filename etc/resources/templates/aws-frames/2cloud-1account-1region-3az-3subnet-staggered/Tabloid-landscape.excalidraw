@@ -701,7 +701,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-Tabloid-landscape",
+      "id": "sg-pub-1-c1a1r1-Tabloid-landscape",
       "x": 103,
       "y": 335,
       "width": 592,
@@ -728,7 +728,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-Tabloid-landscape-label",
+      "id": "sg-pub-1-c1a1r1-Tabloid-landscape-label",
       "x": 111,
       "y": 343,
       "width": 533,
@@ -1751,7 +1751,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c2a1r1-Tabloid-landscape",
+      "id": "sg-pub-1-c2a1r1-Tabloid-landscape",
       "x": 904,
       "y": 335,
       "width": 592,
@@ -1778,7 +1778,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c2a1r1-Tabloid-landscape-label",
+      "id": "sg-pub-1-c2a1r1-Tabloid-landscape-label",
       "x": 912,
       "y": 343,
       "width": 533,

@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-Tabloid-portrait",
+      "id": "sg-pub-1-c1a1r1-Tabloid-portrait",
       "x": 103,
       "y": 335,
       "width": 400,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-Tabloid-portrait-label",
+      "id": "sg-pub-1-c1a1r1-Tabloid-portrait-label",
       "x": 111,
       "y": 343,
       "width": 360,
@@ -1115,7 +1115,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r1-Tabloid-portrait",
+      "id": "sg-pub-2-c1a1r1-Tabloid-portrait",
       "x": 553,
       "y": 335,
       "width": 400,
@@ -1142,7 +1142,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r1-Tabloid-portrait-label",
+      "id": "sg-pub-2-c1a1r1-Tabloid-portrait-label",
       "x": 561,
       "y": 343,
       "width": 360,
@@ -1943,7 +1943,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a2r1-Tabloid-portrait",
+      "id": "sg-pub-1-c1a2r1-Tabloid-portrait",
       "x": 103,
       "y": 843,
       "width": 400,
@@ -1970,7 +1970,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a2r1-Tabloid-portrait-label",
+      "id": "sg-pub-1-c1a2r1-Tabloid-portrait-label",
       "x": 111,
       "y": 851,
       "width": 360,
@@ -2483,7 +2483,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a2r1-Tabloid-portrait",
+      "id": "sg-pub-2-c1a2r1-Tabloid-portrait",
       "x": 553,
       "y": 843,
       "width": 400,
@@ -2510,7 +2510,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a2r1-Tabloid-portrait-label",
+      "id": "sg-pub-2-c1a2r1-Tabloid-portrait-label",
       "x": 561,
       "y": 851,
       "width": 360,
@@ -3311,7 +3311,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a3r1-Tabloid-portrait",
+      "id": "sg-pub-1-c1a3r1-Tabloid-portrait",
       "x": 103,
       "y": 1352,
       "width": 400,
@@ -3338,7 +3338,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a3r1-Tabloid-portrait-label",
+      "id": "sg-pub-1-c1a3r1-Tabloid-portrait-label",
       "x": 111,
       "y": 1360,
       "width": 360,
@@ -3851,7 +3851,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a3r1-Tabloid-portrait",
+      "id": "sg-pub-2-c1a3r1-Tabloid-portrait",
       "x": 553,
       "y": 1352,
       "width": 400,
@@ -3878,7 +3878,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a3r1-Tabloid-portrait-label",
+      "id": "sg-pub-2-c1a3r1-Tabloid-portrait-label",
       "x": 561,
       "y": 1360,
       "width": 360,

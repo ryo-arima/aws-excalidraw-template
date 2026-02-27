@@ -575,7 +575,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r1-A4-portrait",
+      "id": "sg-pub-1-c1a1r1-A4-portrait",
       "x": 77,
       "y": 294,
       "width": 69,
@@ -602,7 +602,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r1-A4-portrait-label",
+      "id": "sg-pub-1-c1a1r1-A4-portrait-label",
       "x": 83,
       "y": 300,
       "width": 62,
@@ -1115,7 +1115,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r1-A4-portrait",
+      "id": "sg-pub-2-c1a1r1-A4-portrait",
       "x": 183,
       "y": 294,
       "width": 69,
@@ -1142,7 +1142,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r1-A4-portrait-label",
+      "id": "sg-pub-2-c1a1r1-A4-portrait-label",
       "x": 189,
       "y": 300,
       "width": 62,
@@ -1655,7 +1655,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a1r1-A4-portrait",
+      "id": "sg-pub-3-c1a1r1-A4-portrait",
       "x": 289,
       "y": 294,
       "width": 69,
@@ -1682,7 +1682,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a1r1-A4-portrait-label",
+      "id": "sg-pub-3-c1a1r1-A4-portrait-label",
       "x": 295,
       "y": 300,
       "width": 62,
@@ -2387,7 +2387,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub1-c1a1r2-A4-portrait",
+      "id": "sg-pub-1-c1a1r2-A4-portrait",
       "x": 436,
       "y": 294,
       "width": 69,
@@ -2414,7 +2414,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub1-c1a1r2-A4-portrait-label",
+      "id": "sg-pub-1-c1a1r2-A4-portrait-label",
       "x": 442,
       "y": 300,
       "width": 62,
@@ -2927,7 +2927,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub2-c1a1r2-A4-portrait",
+      "id": "sg-pub-2-c1a1r2-A4-portrait",
       "x": 542,
       "y": 294,
       "width": 69,
@@ -2954,7 +2954,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub2-c1a1r2-A4-portrait-label",
+      "id": "sg-pub-2-c1a1r2-A4-portrait-label",
       "x": 548,
       "y": 300,
       "width": 62,
@@ -3467,7 +3467,7 @@
       "lineHeight": 1.25
     },
     {
-      "id": "sg-pub3-c1a1r2-A4-portrait",
+      "id": "sg-pub-3-c1a1r2-A4-portrait",
       "x": 648,
       "y": 294,
       "width": 69,
@@ -3494,7 +3494,7 @@
       "roughness": 0
     },
     {
-      "id": "sg-pub3-c1a1r2-A4-portrait-label",
+      "id": "sg-pub-3-c1a1r2-A4-portrait-label",
       "x": 654,
       "y": 300,
       "width": 62,
