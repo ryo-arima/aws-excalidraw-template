@@ -170,7 +170,7 @@ Examples:
 
 					var lgX, lgY float64
 					if isBatch {
-						lgX, lgY = nextLegendPosRight(scene, fb, lgSz, 4)
+						lgX, lgY = nextLegendPosRight(scene, fb, lgSz, lgLabelW, 4)
 					} else {
 						lgX, lgY = nextLegendPosLeft(scene, fb, lgSz, lgLabelW, 4)
 					}
@@ -255,58 +255,111 @@ func frameBounds(scene *entity.Scene) frameBBox {
 }
 
 // nextIconPos returns the position for the next icon placed outside-bottom
-// of the frame. Icons accumulate left-to-right.
+// of the frame. Icons are laid out left-to-right and wrapped by frame width.
 func nextIconPos(scene *entity.Scene, fb frameBBox, iconSize, gap float64) (x, y float64) {
-	belowY := fb.y + fb.h + 60
-	// find rightmost edge of any element at or below belowY
-	maxRight := fb.x - gap
+	startX := fb.x + 20
+	startY := fb.y + fb.h + 60
+	maxWidth := math.Max(iconSize, fb.w-40)
+	cols := int(math.Floor((maxWidth + gap) / (iconSize + gap)))
+	if cols < 1 {
+		cols = 1
+	}
+
+	count := 0
 	for _, el := range scene.Elements {
+		if !isMainServiceIcon(el) {
+			continue
+		}
 		elY, _ := el["y"].(float64)
-		elX, _ := el["x"].(float64)
-		elW, _ := el["width"].(float64)
-		if elY >= belowY-1 {
-			if elX+elW > maxRight {
-				maxRight = elX + elW
-			}
+		if elY >= fb.y+fb.h+40 {
+			count++
 		}
 	}
-	return maxRight + gap, belowY
+
+	idx := count
+	col := idx % cols
+	row := idx / cols
+	rowStep := iconSize + 52
+
+	return startX + float64(col)*(iconSize+gap), startY + float64(row)*rowStep
 }
 
 // nextLegendPosRight returns the next legend position stacked on the RIGHT of the frame.
-// Only considers elements within the frame's y-range to avoid being pushed down by
-// below-frame icons whose x may also exceed the frame's right edge.
-func nextLegendPosRight(scene *entity.Scene, fb frameBBox, lgSz, gap float64) (x, y float64) {
-	x = fb.x + fb.w + 40
-	y = fb.y
+// When the legend reaches frame height, it adds a new column to the right.
+func nextLegendPosRight(scene *entity.Scene, fb frameBBox, lgSz, lgLabelW, gap float64) (x, y float64) {
+	baseX := fb.x + fb.w + 40
+	rowStep := lgSz + gap
+	rowsPerCol := int(math.Floor((fb.h + gap) / rowStep))
+	if rowsPerCol < 1 {
+		rowsPerCol = 1
+	}
+
+	count := 0
 	for _, el := range scene.Elements {
+		if !isLegendIcon(el) {
+			continue
+		}
 		elX, _ := el["x"].(float64)
 		elY, _ := el["y"].(float64)
-		elH, _ := el["height"].(float64)
 		if elX >= fb.x+fb.w+10 && elY >= fb.y-10 && elY < fb.y+fb.h+40 {
-			if elY+elH > y {
-				y = elY + elH + gap
-			}
+			count++
 		}
 	}
-	return x, y
+
+	idx := count
+	col := idx / rowsPerCol
+	row := idx % rowsPerCol
+	colStep := lgSz + 6 + lgLabelW + 24
+
+	return baseX + float64(col)*colStep, fb.y + float64(row)*rowStep
 }
 
 // nextLegendPosLeft returns the next legend position stacked on the LEFT of the frame.
+// When the legend reaches frame height, it adds a new column to the right.
 func nextLegendPosLeft(scene *entity.Scene, fb frameBBox, lgSz, lgLabelW, gap float64) (x, y float64) {
-	x = fb.x - lgSz - lgLabelW - 20
-	y = fb.y
+	baseX := fb.x - lgSz - lgLabelW - 20
+	rowStep := lgSz + gap
+	rowsPerCol := int(math.Floor((fb.h + gap) / rowStep))
+	if rowsPerCol < 1 {
+		rowsPerCol = 1
+	}
+
+	count := 0
 	for _, el := range scene.Elements {
+		if !isLegendIcon(el) {
+			continue
+		}
 		elX, _ := el["x"].(float64)
 		elY, _ := el["y"].(float64)
-		elH, _ := el["height"].(float64)
 		if elX < fb.x-5 && elY >= fb.y-10 && elY < fb.y+fb.h+40 {
-			if elY+elH > y {
-				y = elY + elH + gap
-			}
+			count++
 		}
 	}
-	return x, y
+
+	idx := count
+	col := idx / rowsPerCol
+	row := idx % rowsPerCol
+	colStep := lgSz + 6 + lgLabelW + 24
+
+	return baseX + float64(col)*colStep, fb.y + float64(row)*rowStep
+}
+
+func isMainServiceIcon(el map[string]interface{}) bool {
+	t, _ := el["type"].(string)
+	if t != "image" {
+		return false
+	}
+	id, _ := el["id"].(string)
+	return strings.HasPrefix(id, "svc-") && !strings.Contains(id, "-lg-")
+}
+
+func isLegendIcon(el map[string]interface{}) bool {
+	t, _ := el["type"].(string)
+	if t != "image" {
+		return false
+	}
+	id, _ := el["id"].(string)
+	return strings.HasPrefix(id, "svc-") && strings.Contains(id, "-lg-ico")
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
